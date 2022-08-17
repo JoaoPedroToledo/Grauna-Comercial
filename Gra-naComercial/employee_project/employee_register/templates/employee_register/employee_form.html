@@ -1,0 +1,3489 @@
+<nav class="navbar navbar navbar-dark bg-dark justify-content-between">
+    <a href="/employee/list/"class="navbar-brand" onclick="return confirm('Tem certeza que deseja voltar para a página incial?')" style="color: white;">HOME</a>
+  </nav>
+
+{% extends "employee_register/base.html" %}
+{% load crispy_forms_tags %}
+<head>
+    <link rel="shortcut icon" type="imagex/png" href="https://graunaaerospace.com.br/wp-content/uploads/2017/06/cropped-logo.png">
+<script src="D:\crud_django\Django-CRUD-Operations\employee_project\employee_register\js\jquery.min.js"></script>
+<script src="D:\crud_django\Django-CRUD-Operations\employee_project\employee_register\js\bootstrap.min.js"></script>
+<link rel="stylesheet" src="D:\crud_django\Django-CRUD-Operations\employee_project\employee_register\css\bootstrap-multiselect.css" type="text/css">
+<link rel="stylesheet" src="D:\crud_django\Django-CRUD-Operations\employee_project\employee_register\css\prettify.css" type="text/css">
+
+<script type="text/javascript" src="D:\crud_django\Django-CRUD-Operations\employee_project\employee_register\js\bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="D:\crud_django\Django-CRUD-Operations\employee_project\employee_register\js\prettify.js"></script>
+
+
+
+<style>
+    
+    .bootstrap-select .bs-ok-default::after {
+        width: 0.3em;
+        height: 0.6em;
+        border-width: 0 0.1em 0.1em 0;
+        transform: rotate(45deg) translateY(0.5rem);
+    }
+    
+    .btn.dropdown-toggle:focus {
+        outline: none !important;
+    }
+    
+    ul#youelementId li{
+        display: inline-block;
+    }
+       
+</style>
+
+</head>
+
+{% block content %}
+<body style="font-size: 0.8em;" onload="checkado(), checkado1(),checkado2(),checkado3(),checkado4(),checkado5(),checkado6(),checkado7(), checkado8(),checkado9(), checkado10(), checkado11(), show(), desab(), tsf(), tte()">
+<style>
+    .fixed {
+    float: right;
+    }
+    </style>
+    
+<form action="" method="POST" enctype="multipart/form-data" autocomplete="off">
+    {% csrf_token %}
+    {{form.errors}}
+    <div class="display-4">Análise Crítica da Cotação</div>
+    {{form.errors}}
+    <hr class="my-4">
+    <div class="row">
+        <div class="col-md-3" >
+            {{form.fullname|as_crispy_field}}
+        </div>
+        <div class="col-md-3" onchange="valor_cotacao()">
+            {{form.mobile|as_crispy_field}}
+        </div>
+        <div class="col-md-1">
+            {{form.rev|as_crispy_field}}
+        </div>
+        <div class="col-md-5 lin-md-2">
+            {{form.descricao|as_crispy_field}}
+        </div>       
+    </div>
+    <div class="row">
+        <div class="col-md-3" >
+            {{form.position|as_crispy_field}}
+        </div>
+        <div class="col-md-3">
+            {{form.empresa|as_crispy_field}}
+        </div>
+        <div class="col-md-5">
+            {{form.materia|as_crispy_field}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            {{form.data_atual|as_crispy_field}}
+        </div>
+    <div class="col-md-2">
+    {{form.data_final|as_crispy_field}}
+    </div>
+    <div class="col-md-2">
+        {{form.quantidade|as_crispy_field}}
+    </div>
+    {% for m in messages %}
+    {{ m }}
+{% endfor %}
+    <div>
+        <div class="col-md-15" onclick="validasenha()">
+            {{form.senha|as_crispy_field}}
+        </div>
+        <!--<p><label for="id_senha" style="display:inline;">Assinatura Eletrônica(Assinature Eletronic):</label></p> <input type="text" inputmode="numeric" onblur="validasenha()" style="display:inline; width: 90px;" name="assinatura" maxlength="50" required="" id="id_senha">-->
+</div>
+<div class="col-md-2">
+    {{form.assinatura|as_crispy_field}}
+</div>
+</div>
+<hr class="my-4">
+    
+        <center>
+        <div>
+            <input type="radio" name="id_cotacao" value="Cotação em Aberto" checked="checked"><b>  Cotação em Aberto</b></input>
+            <input type="radio" name="id_cotacao" value="Enviado para o Cliente"><b>  Enviado para o Cliente</b></input>
+            <input type="radio" name="id_cotacao" value="BAFO"><b>  BAFO</b></input>
+            <input type="radio" name="id_cotacao" value="Item Ganho"><b>  Item Ganho</b></input>
+            
+            <!--{{form.cotacao|as_crispy_field}}-->
+        </div>
+        </center>
+    
+    <hr class="my-4">
+
+    <div onclick="checkado()">{{form.risco_nt|as_crispy_field}}</div>
+    <div>{{form.det_risco_nt|as_crispy_field}}</div>
+    <div onclick="checkado1()">{{form.risco_pe|as_crispy_field}}</div>
+    <div>{{form.det_risco_pe|as_crispy_field}}</div>
+    <div onclick="checkado2()">{{form.risco_fin|as_crispy_field}}</div>
+    <div>{{form.det_risco_fin|as_crispy_field}}</div>
+    <div onclick="checkado3()">{{form.rec_disp|as_crispy_field}}</div>
+    <div>{{form.det_rec_disp|as_crispy_field}}</div>
+    <div onclick="checkado4()">{{form.tol|as_crispy_field}}</div>
+    <div>{{form.det_tol|as_crispy_field}}</div>
+    <div onclick="checkado5()">{{form.risco_trat|as_crispy_field}}</div>
+    <div>{{form.det_risco_trat|as_crispy_field}}</div>
+    <div onclick="checkado6()">{{form.anot_risco|as_crispy_field}}</div>
+    <div>{{form.det_anot_risco|as_crispy_field}}</div>
+    <div onclick="desab()" >{{form.not_aplic|as_crispy_field}}</div>
+
+    <hr class="my-4">
+
+    <strong>Havendo confirmação de riscos, estes deverão ser avaliados conforme GP21 – Gestão de Riscos (If there is confirmation of risks, these must be evaluated in accordance with GP21 - Risk Management)</strong>
+    <hr class="my-4">
+    <div onclick="checkado7()">{{form.decline|as_crispy_field}}</div>
+    
+    <div style="display: inline;"><label for="id_av_cli" id="av1_cli" style="display: none;" class="form-check-label">
+        {{form.av_cli|as_crispy_field}} Avisado Cliente?(Customer Warned?)
+    </label></div>
+    <hr class="my-4">
+    <p></p>
+
+    <div onclick="checkado8()">{{form.req_cert|as_crispy_field}}</div><!--Requisitos de Certificação da Qualidade conforme requerido? (Quality certification requirements as required?) :*       <p></p><div id="req_cert"> <input type="radio" id="req_cert_1" name="req_cert" value="NÃO (NO){% if form.req_cert == '0' %} checked {% endif %}">   NÃO (NO)   </input><input type="radio" id="req_cert_0" name="req_cert" value="SIM (YES) {% if form.req_cert == '1' %} checked {% endif %}">   SIM (YES)   </input></div></div>-->
+    <p></p>
+    <div >{{form.det_req_cert|as_crispy_field}}</div>
+    <div onclick="checkado9()">{{form.proc_qual|as_crispy_field}}</div><!--Existem requisitos ligados à normas e processos especiais não qualificados?(Are there requirements related to special unqualified standards and processes?):*       <p></p> <input type="radio" id="proc_qual_0" name="proc_qual" value="1">   SIM (YES)   </input><input type="radio" id="proc_qual_1" name="proc_qual" value="0">   NÃO (NO)   </input></div>-->
+    <p></p>
+    <div>{{form.det_proc_qual|as_crispy_field}}</div>
+    <div onclick="checkado10()">{{form.req_embal|as_crispy_field}}</div><!--Existem requisitos específicos de embalagem? (Are there specific packaging requirements?):*<p></p><input type="radio" id="req_embal_0" name="req_embal" value="1">   SIM (YES)   </input><input type="radio" id="req_embal_1" name="req_embal" value="0">   NÃO (NO)   </input></div>-->
+    <p></p>
+    <div>{{form.det_req_embal|as_crispy_field}}</div>
+    <hr class="my-4">
+    <div onclick="checkado11()">{{form.alt_cli|as_crispy_field}}</div><!--Necessária alteração do processo do cliente? (Need to change the customers process?): *<p></p><input type="radio" id="alt_cli_0" name="alt_cli" value="1">   SIM (YES)   </input><input type="radio" id="alt_cli_1" name="alt_cli" value="0">   NÃO (NO)   </input></div>-->
+    <div>{{form.det_alt_cli|as_crispy_field}}</div>
+    <p></p>
+    <div onclick="show()">{{form.proc_terc|as_crispy_field}}</div>
+
+    <script type="text/javascript">
+        
+
+        function checkbox()
+        {
+            var bk=document.getElementById("alo").checked;;
+            var cer=document.getElementById("anod_cro").checked;
+            var a=document.getElementById("liq_pena").checked;;
+            var b=document.getElementById("primear").checked;
+            var antib=document.getElementById("antib").checked;;
+            var pu=document.getElementById("pu").checked;	
+            
+            var passi=document.getElementById("passi").checked;;
+            var eight=document.getElementById("eight").checked;
+            var anod_col=document.getElementById("anod_col").checked;;
+            var anod_sulf_inc=document.getElementById("anod_sulf_inc").checked;
+            var eleven=document.getElementById("eleven").checked;;
+            var part_magn=document.getElementById("part_magn").checked;
+            var shoot=document.getElementById("shoot").checked;;
+            var cadmio=document.getElementById("cadmio").checked;
+            var fosf=document.getElementById("fosf").checked;;
+            var jatea=document.getElementById("jatea").checked;
+            var oxid_negra=document.getElementById("oxid_negra").checked;;
+            var oleo_prot=document.getElementById("oleo_prot").checked;
+            var zinco=document.getElementById("zinco").checked;;
+            var ataque_nit=document.getElementById("ataque_nit").checked;
+            var cromo=document.getElementById("cromo").checked;;
+            var desidro=document.getElementById("desidro").checked;
+            
+            
+            
+            
+            if(bk) bk = (" Alodine "); else bk = ("");
+            if(cer) cer =("|  Anodização Crômica"); else cer = ("");
+            if(a) a = ("|   Líquido Penetrante"); else a = ("");
+            if(b) b = ("|   Primer Epóxi"); else b = ("");
+            if(antib) antib = ("|   Antibiológico"); else antib = ("");
+            if(pu) pu = ("|   PU"); else pu = ("");
+        if(passi) passi = ("|   Passivação"); else passi = ("");
+        if(eight) eight = ("|   Metalização|Isolamento"); else eight = ("");
+        if(anod_col) anod_col = ("|   Anodização Colorida"); else anod_col = ("");
+        if(anod_sulf_inc) anod_sulf_inc = ("|   Anodização Sulfúrica Incolor"); else anod_sulf_inc = ("");
+        if(eleven) eleven = ("|   Anodização Dura"); else eleven = ("");
+        if(part_magn) part_magn = ("|   Partícula Magnética"); else part_magn = ("");
+        if(shoot) shoot = ("|   Shoot Peening"); else shoot = ("");
+        if(cadmio) cadmio = ("|   Cádmio"); else cadmio = ("");
+        if(fosf) fosf = ("|   Fosfatização"); else fosf = ("");
+        if(jatea) jatea = ("|   Jateamento"); else jatea = ("");
+        if(oxid_negra) oxid_negra = ("|   Oxidação Negra"); else oxid_negra = ("");
+        if(oleo_prot) oleo_prot = ("|   Óleo Protetivo"); else oleo_prot = ("");
+        if(zinco) zinco = ("|   Zinco"); else zinco = ("");
+        if(ataque_nit) ataque_nit = ("|   Ataque Nital"); else ataque_nit = ("");
+        if(cromo) cromo = ("|   Cromo"); else cromo = ("");
+        if(desidro) desidro = ("|   Desidrogenização");  else desidro = ("");
+        
+        var text = (bk + cer + a + b + antib + pu + passi + eight + anod_col + anod_sulf_inc + eleven + part_magn + shoot + cadmio + fosf + jatea + oxid_negra 
+        + oleo_prot + zinco + ataque_nit + cromo + desidro)
+        document.getElementById("tratamento_final").innerHTML = text
+        console.log(text)
+        return false;   
+        }
+
+        function checkboxx()
+{
+    var onee=document.getElementById("onee").checked;;
+    var twoo=document.getElementById("twoo").checked;
+	var threee=document.getElementById("threee").checked;;
+    var fourr=document.getElementById("fourr").checked;
+	var fivee=document.getElementById("fivee").checked;;
+    var sixx=document.getElementById("sixx").checked;	
+	
+	var sevenn=document.getElementById("sevenn").checked;;
+    var eightt=document.getElementById("eightt").checked;
+	var ninee=document.getElementById("ninee").checked;;
+  
+	
+	if(onee) onee = (" Endur. Precipitação"); else onee = ("");
+    if(twoo) twoo = ("|   Têmpera e Revenimento"); else twoo = ("");
+	if(threee) threee = ("|   Endur. Precipitação A286"); else threee = ("");
+	if(fourr) fourr = ("|   Sub Zero"); else fourr = ("");
+	if(fivee) fivee = ("|   Têmpera e Revenimento (AOG)"); else fivee = ("");
+	if(sixx) sixx = ("|   Endur. e Precipitação (AOG)"); else sixx = ("");
+if(sevenn) sevenn = ("|   Alívio de Tensão"); else sevenn = ("");
+if(eightt) eightt = ("|   Inspeção Metalográfica"); else eightt = ("");
+if(ninee) ninee = ("|   Ensaio de Tração"); else ninee = ("");
+
+var text = (onee + twoo + three + fourr + fivee + sixx + sevenn + eightt + ninee)
+        document.getElementById("villares_final").innerHTML = text
+
+return false;   
+}
+
+  function verificargrupo() {
+	dimen = document.getElementById("dimensao").value;
+	console.log(dimen)
+	var totalp = document.getElementById("pontos").value;
+	var totallp = totalp * 4.20;
+	var fornecedor = document.getElementsByName("trats");
+    console.log(totallp)
+	//verificafornecedor();
+	for (var i = 0 in fornecedor) 
+	if (dimen > 1 && dimen <= 125){
+			if (fornecedor[0].checked){
+				console.log(fornecedor);
+				document.getElementById("alodine").value = "6.12";
+				document.getElementById("anod_crom").value = "7.98";
+				document.getElementById("liq_pen").value = "17.36";
+				document.getElementById("primer").value = "1.60";
+				document.getElementById("antib").value = "1.60";
+				document.getElementById("tinta_poli").value = "2.39";
+				document.getElementById("pass").value = "6.12";
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = "7.68";
+				}
+			
+			else if (fornecedor[1].checked){
+				
+				document.getElementById("alodine").value = 5.82;
+				document.getElementById("anod_crom").value = 7.68;
+				document.getElementById("liq_pen").value = 13.20;
+				document.getElementById("primer").value = 1.62;
+				document.getElementById("antib").value = 1.62;
+				document.getElementById("tinta_poli").value = 2.34;
+				document.getElementById("pass").value = 3.48;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 7.68;	
+			}
+			}
+		else if (dimen <= 250){
+			for (var i = 0 in fornecedor) 
+			if (fornecedor[0].checked){
+				console.log(fornecedor);
+				document.getElementById("alodine").value = "7.44";
+				document.getElementById("anod_crom").value = "9.73";
+				document.getElementById("liq_pen").value = "17.70";
+				document.getElementById("primer").value = "2.39";
+				document.getElementById("antibb").value = "2.39";
+				document.getElementById("tinta_poli").value = "3.19";
+				document.getElementById("pass").value = "7.44";
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = "9.36";
+				}
+			
+			else if (fornecedor[1].checked){
+				
+				document.getElementById("alodine").value = 7.02;
+				document.getElementById("anod_crom").value = 9.36;
+				document.getElementById("liq_pen").value = 14.40;
+				document.getElementById("primer").value = 2.34;
+				document.getElementById("antibb").value = 2.34;
+				document.getElementById("tinta_poli").value = 3.30;
+				document.getElementById("pass").value = 3.48;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 9.36;	
+			}
+			}
+		else if (dimen <= 500){
+			for (var i = 0 in fornecedor) 
+			if (fornecedor[0].checked){
+				console.log(fornecedor);
+				document.getElementById("alodine").value = 11.80;
+				document.getElementById("anod_crom").value = 15.35;
+				document.getElementById("liq_pen").value = 24.47;
+				document.getElementById("primer").value = 3.63;
+				document.getElementById("antibb").value = 3.63;
+				document.getElementById("tinta_poli").value = 4.54;
+				document.getElementById("pass").value = 11.80;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 12.96;
+				}
+			
+			else if (fornecedor[1].checked){
+				
+				document.getElementById("alodine").value = 9.90;
+				document.getElementById("anod_crom").value = 12.96;
+				document.getElementById("liq_pen").value = 16.80;
+				document.getElementById("primer").value = 3.36;
+				document.getElementById("antibb").value = 3.36;
+				document.getElementById("tinta_poli").value = 3.96;
+				document.getElementById("pass").value = 3.48;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 12.96;	
+			}	
+	
+
+}
+	else if (dimen <= 1000){
+			for (var i = 0 in fornecedor) 
+			if (fornecedor[0].checked){
+				console.log(fornecedor);
+				document.getElementById("alodine").value = 24.20;
+				document.getElementById("anod_crom").value = 31.45;
+				document.getElementById("liq_pen").value = 42.02;
+				document.getElementById("primer").value = 5.36;
+				document.getElementById("antibb").value = 5.36;
+				document.getElementById("tinta_poli").value = 6.44;
+				document.getElementById("pass").value = 0;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 31.45;
+				}
+			
+			else if (fornecedor[1].checked){
+				
+				document.getElementById("alodine").value = 17.04;
+				document.getElementById("anod_crom").value = 22.80;
+				document.getElementById("liq_pen").value = 30.00;
+				document.getElementById("primer").value = 4.20;
+				document.getElementById("antibb").value = 4.20;
+				document.getElementById("tinta_poli").value = 5.04;
+				document.getElementById("pass").value = 3.48;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 22.80;	
+			}	
+	
+
+}
+	else if (dimen <= 1125){
+			for (var i = 0 in fornecedor) 
+			if (fornecedor[0].checked){
+				console.log(fornecedor);
+				document.getElementById("alodine").value = 32.43;
+				document.getElementById("anod_crom").value = 42.18;
+				document.getElementById("liq_pen").value = 58.54;
+				document.getElementById("primer").value = 7.51;
+				document.getElementById("antibb").value = 7.51;
+				document.getElementById("tinta_poli").value = 9.65;
+				document.getElementById("pass").value = 0;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 42.18;
+				}
+			
+			else if (fornecedor[1].checked){
+				
+				document.getElementById("alodine").value = 30.00;
+				document.getElementById("anod_crom").value = 38.40;
+				document.getElementById("liq_pen").value = 38.40;
+				document.getElementById("primer").value = 5.04;
+				document.getElementById("antibb").value = 5.04;
+				document.getElementById("tinta_poli").value = 6.96;
+				document.getElementById("pass").value = 3.48;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 38.40;	
+			}	
+	
+
+}	else if (dimen <= 1250){
+			for (var i = 0 in fornecedor) 
+			if (fornecedor[0].checked){
+				console.log(fornecedor);
+				document.getElementById("alodine").value = 37.71;
+				document.getElementById("anod_crom").value = 49.11;
+				document.getElementById("liq_pen").value = 65.06;
+				document.getElementById("primer").value = 9.46;
+				document.getElementById("antibb").value = 9.46;
+				document.getElementById("tinta_poli").value = 11.83;
+				document.getElementById("pass").value = 0;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 49.11;
+				}
+			
+			else if (fornecedor[1].checked){
+				
+				document.getElementById("alodine").value = 32.40;
+				document.getElementById("anod_crom").value = 40.80;
+				document.getElementById("liq_pen").value = 42.00;
+				document.getElementById("primer").value = 6.00;
+				document.getElementById("antibb").value = 6.00;
+				document.getElementById("tinta_poli").value = 8.40;
+				document.getElementById("pass").value = 3.48;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 40.80;	
+			}	
+	
+
+}	
+	else if (dimen <= 1500){
+			for (var i = 0 in fornecedor) 
+			if (fornecedor[0].checked){
+				console.log(fornecedor);
+				document.getElementById("alodine").value = 42.05;
+				document.getElementById("anod_crom").value = 54.67;
+				document.getElementById("liq_pen").value = 70.69;
+				document.getElementById("primer").value = 10.64;
+				document.getElementById("antibb").value = 10.64;
+				document.getElementById("tinta_poli").value = 13.01;
+				document.getElementById("pass").value = 0;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 54.67;
+				}
+			
+			else if (fornecedor[1].checked){
+				
+				document.getElementById("alodine").value = 36.00;
+				document.getElementById("anod_crom").value = 44.40;
+				document.getElementById("liq_pen").value = 44.40;
+				document.getElementById("primer").value = 6.60;
+				document.getElementById("antibb").value = 6.604;
+				document.getElementById("tinta_poli").value = 10.20;
+				document.getElementById("pass").value = 3.48;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 44.40;	
+			}	
+	
+
+}	
+	else if (dimen <= 2000){
+			for (var i = 0 in fornecedor) 
+			if (fornecedor[0].checked){
+				console.log(fornecedor);
+				document.getElementById("alodine").value = 53.36;
+				document.getElementById("anod_crom").value = 69.36;
+				document.getElementById("liq_pen").value = 85.14;
+				document.getElementById("primer").value = 11.83;
+				document.getElementById("antibb").value = 11.83;
+				document.getElementById("tinta_poli").value = 14.19;
+				document.getElementById("pass").value = 0;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 69.36;
+				}
+			
+			else if (fornecedor[1].checked){
+				
+				document.getElementById("alodine").value = 51.00;
+				document.getElementById("anod_crom").value = 54.00;
+				document.getElementById("liq_pen").value = 58.80;
+				document.getElementById("primer").value = 8.28;
+				document.getElementById("antibb").value = 8.28;
+				document.getElementById("tinta_poli").value = 11.76;
+				document.getElementById("pass").value = 3.48;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 54.00;	
+			}	
+	
+
+}	else if (dimen <= 2125){
+			for (var i = 0 in fornecedor) 
+			if (fornecedor[0].checked){
+				console.log(fornecedor);
+				document.getElementById("alodine").value = 62.44;
+				document.getElementById("anod_crom").value = 81.18;
+				document.getElementById("liq_pen").value = 103.35;
+				document.getElementById("primer").value = 14.19;
+				document.getElementById("antibb").value = 14.19;
+				document.getElementById("tinta_poli").value = 17.74;
+				document.getElementById("pass").value = 0;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 81.18;
+				}
+			
+			else if (fornecedor[1].checked){
+				
+				document.getElementById("alodine").value = 54.00;
+				document.getElementById("anod_crom").value = 66.00;
+				document.getElementById("liq_pen").value = 62.40;
+				document.getElementById("primer").value = 9.00;
+				document.getElementById("antibb").value = 9.00;
+				document.getElementById("tinta_poli").value = 14.40;
+				document.getElementById("pass").value = 3.48;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 66.00;	
+			}	
+	
+
+}	
+	else if (dimen < 2125){
+			for (var i = 0 in fornecedor) 
+			if (fornecedor[0].checked){
+				console.log(fornecedor);
+				document.getElementById("alodine").value = 73.38;
+				document.getElementById("anod_crom").value = 95.48;
+				document.getElementById("liq_pen").value = 118.36;
+				document.getElementById("primer").value = 17.52;
+				document.getElementById("antibb").value = 17.52;
+				document.getElementById("tinta_poli").value = 21.56;
+				document.getElementById("pass").value = 0;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 95.48;
+				}
+			
+			else if (fornecedor[1].checked){
+				
+				document.getElementById("alodine").value = 62.40;
+				document.getElementById("anod_crom").value = 74.40;
+				document.getElementById("liq_pen").value = 74.40;
+				document.getElementById("primer").value = 10.80;
+				document.getElementById("antibb").value = 10.80;
+				document.getElementById("tinta_poli").value = 16.80;
+				document.getElementById("pass").value = 3.48;
+				document.getElementById("metal").value = totallp;
+				document.getElementById("anod_inc").value = 74.40;	
+			}	
+	
+
+}
+	else {
+		for (var i = 0 in fornecedor) 
+			if (fornecedor[0].checked){
+				console.log(fornecedor);
+				document.getElementById("alodine").value = 0;
+				document.getElementById("anod_crom").value = 0;
+				document.getElementById("liq_pen").value = 0;
+				document.getElementById("primer").value = 0;
+				document.getElementById("antibb").value = 0;
+				document.getElementById("tinta_poli").value = 0;
+				document.getElementById("pass").value = 0;
+				document.getElementById("metal").value = 0;
+				document.getElementById("anod_inc").value = 0;
+				}
+			
+			else if (fornecedor[1].checked){
+				
+				document.getElementById("alodine").value = 0;
+				document.getElementById("anod_crom").value = 0;
+				document.getElementById("liq_pen").value = 0;
+				document.getElementById("primer").value = 0;
+				document.getElementById("antibb").value = 0;
+				document.getElementById("tinta_poli").value = 0;
+				document.getElementById("pass").value = 0;
+				document.getElementById("metal").value = 0;
+				document.getElementById("anod_inc").value = 0;	
+			}	
+	}
+	
+
+
+}
+        </script>
+        <hr class="my-4">
+    <div id="mostrattratamentos" style="display: none;">
+        <div >Dimensão:
+            <input type="text" style="width: 90px;" id="dimensao" onblur="dimen()"> </input>&ensp;&ensp;&ensp;&ensp;
+            <label id="valor_dim" onclick="dimen()"></label>
+            </div>
+            
+            <div style="display:block;"><input type="radio" id="metinjo" name="trats" value="Me" onclick="checkadotsuperf();">&ensp;Metinjo</input>&ensp;&ensp;
+            <input type="radio" id="magnaghi"  name="trats" value="Ma" onclick="checkadotsuperf();">&ensp;Magnaghi</input>&ensp;&ensp;
+            <input type="radio" id="outro"  name="trats" value="Ot" onclick="checkadotsuperf();">&ensp;Outro fornecedor:</input>
+            <input id="ot_text" type="text" disabled></input>
+            Orçamento:&ensp;<input type="text" placeholder="Valor do Orçamento" id="valor_t_super" style="width: 290px;" onchange="valor_super()"></input>
+            </div>
+            <p></p>
+            
+            <div>{{form.trat_superf|as_crispy_field}}</div>
+                  
+            <p></p>
+                    <textarea id="demo" rows="3" cols="70"></textarea>
+            <script>
+                $(document).ready(function tsf() {
+                    $(".form-check-input").click(function(e) {
+                        var checados = [];
+                        $.each($("input[name='trat_superf']:checked"), function(){            
+                            checados.push($(this).val());
+                        });
+                        var demo = document.getElementById("demo").value = checados.join(", ");
+                    });
+                });
+
+                $(document).ready(function tte() {
+                    $(".form-check-input").click(function(e) {
+                        var checados = [];
+                        $.each($("input[name='trat_term']:checked"), function(){            
+                            checados.push($(this).val());
+                        });
+                        var demo = document.getElementById("demo1").value = checados.join(", ");
+                    });
+                });
+            </script>
+                    
+                
+          		
+                
+            <p></p>
+            <input type="radio" name="termicos" value="Vi"onclick="checkadotterm();"id="Vi">&ensp;Villares</input>&ensp;&ensp;
+            <input type="radio" name="termicos" value="Of"onclick="checkadotterm();"id="Of">&ensp;Outro fornecedor</input>
+            <input id="oti_text" type="text" disabled></input>
+            Peso da Peça: <input id="pesoo" style="width:40px;" onblur=""></input>
+            <p></p>
+            <div>{{form.trat_term|as_crispy_field}}</div>
+            <textarea id="demo1" rows="3" cols="70"></textarea>    
+        </p>
+    </div>
+    <script type="text/javascript">
+
+        function valor_cotacao(){
+            var cot = document.getElementById("id_fullname").value;
+            var pn = document.getElementById("id_mobile").value;
+            cot_pn = cot + "_" + pn
+            document.getElementById("pn").value = cot_pn;
+            console.log(cot_pn)
+        }
+
+    
+        function check11(){
+            v1 = document.getElementById("onee");
+            
+            if(v1.checked){
+                document.getElementById("valorend").type = 'text';
+                document.getElementById("valorend").value = 15.21;
+            }
+            else{
+                document.getElementById("valorend").type = 'hidden'; 
+            }
+        }
+        
+        function check12(){
+            v2 = document.getElementById("twoo");
+            
+            if(v2.checked){
+                document.getElementById("valorendrevenimento").type = 'text';
+                document.getElementById("valorendrevenimento").value = 37.63;
+            }
+            else{
+                document.getElementById("valorendrevenimento").type = 'hidden';
+            }
+        }
+
+        function check13(){
+            v2 = document.getElementById("threee");
+            
+            if(v2.checked){
+                document.getElementById("valorenda286").type = 'text';
+                document.getElementById("valorenda286").value = 15.21;
+            }
+            else{
+                document.getElementById("valorenda286").type = 'hidden';
+            }
+        }
+
+        function check14(){
+            v2 = document.getElementById("fourr");
+            
+            if(v2.checked){
+                document.getElementById("valorsub").type = 'text';
+                document.getElementById("valorsub").value = 522.22;
+            }
+            else{
+                document.getElementById("valorsub").type = 'hidden';
+            }
+        }
+
+        function check15(){
+            v2 = document.getElementById("fivee");
+            
+            if(v2.checked){
+                document.getElementById("valortemp").type = 'text';
+                document.getElementById("valortemp").value = 837.63;
+            }
+            else{
+                document.getElementById("valortemp").type = 'hidden';
+            }
+        }
+
+        function check16(){
+            v2 = document.getElementById("sixx");
+            
+            if(v2.checked){
+                document.getElementById("valorendrevaog").type = 'text';
+                document.getElementById("valorendrevaog").value = 915.21;
+            }
+            else{
+                document.getElementById("valorendrevaog").type = 'hidden';
+            }
+        }
+        function check17(){
+            v2 = document.getElementById("sevenn");
+            
+            if(v2.checked){
+                document.getElementById("valoralivio").type = 'text';
+                document.getElementById("valoralivio").value = 15.21;
+            }
+            else{
+                document.getElementById("valoralivio").type = 'hidden';
+            }
+        }
+        function check18(){
+            v2 = document.getElementById("eightt");
+            
+            if(v2.checked){
+                document.getElementById("valorinsp").type = 'text';
+                document.getElementById("valorinsp").value = 15.21;
+            }
+            else{
+                document.getElementById("valorinsp").type = 'hidden';
+            }
+        }
+
+        function check19(){
+            v2 = document.getElementById("ninee");
+            
+            if(v2.checked){
+                document.getElementById("valortracao").type = 'text';
+                document.getElementById("valortracao").value = 408.21;
+            }
+            else{
+                document.getElementById("valortracao").type = 'hidden';
+            }
+        }
+    
+        function peso(){
+            var valorpeso = document.getElementById("pesoo").value;
+            console.log(valorpeso)
+
+            var valorend = parseFloat(valorpeso) * (15.21);
+            var valorendd = valorend.toFixed(2);
+            var valorendrevenimento = parseFloat(valorpeso) * (37.63);
+            var valorendrevenimentoo = valorendrevenimento.toFixed(2);
+            var valorenda286 = parseFloat(valorpeso) * (15.21);
+            var valorenda2866 = valorenda286.toFixed(2);
+            var valorsub = parseFloat(valorpeso) * (522.22);
+            var valorsubb = valorsub.toFixed(2);
+            var valortemp = parseFloat(valorpeso) * (837.63);
+            var valortempp = valortemp.toFixed(2);
+            var valorendrevaog = parseFloat(valorpeso) * (915.21);
+            var valorendrevaogg = valorendrevaog.toFixed(2);
+            var valoralivio = parseFloat(valorpeso) * (15.21);
+            var valoralivioo = valoralivio.toFixed(2);
+            var valorinsp = parseFloat(valorpeso) * (15.21);
+            var valorinspp = valorinsp.toFixed(2);
+            var valortracao = parseFloat(valorpeso) * (408.21);
+            var valortracaoo = valortracao.toFixed(2);
+
+            document.getElementById("valorend").value = valorendd;
+            document.getElementById("valorendrevenimento").value = valorendrevenimentoo;
+            document.getElementById("valorenda286").value = valorenda2866;
+            document.getElementById("valorsub").value = valorsubb;
+            document.getElementById("valortemp").value = valortempp;
+            document.getElementById("valorendrevaog").value = valorendrevaogg;
+            document.getElementById("valoralivio").value = valoralivioo;
+            document.getElementById("valorinsp").value = valorinspp;
+            document.getElementById("valortracao").value = valortracaoo;
+
+        }
+        
+
+
+        function checkk11(){
+            v1 = document.getElementById("alo");
+            
+            if(v1.checked){
+                document.getElementById("alodine").type = 'text';
+                
+            }
+            else{
+                document.getElementById("alodine").type = 'hidden'; 
+            }
+        }
+        function checkk12(){
+            v1 = document.getElementById("anod_cro");
+            
+            if(v1.checked){
+                document.getElementById("anod_crom").type = 'text';
+                
+            }
+            else{
+                document.getElementById("anod_crom").type = 'hidden'; 
+            }
+        }
+        function checkk13(){
+            v1 = document.getElementById("liq_pena");
+            
+            if(v1.checked){
+                document.getElementById("liq_pen").type = 'text';
+                
+            }
+            else{
+                document.getElementById("liq_pen").type = 'hidden'; 
+            }
+        }
+        function checkk14(){
+            v1 = document.getElementById("primear");
+            
+            if(v1.checked){
+                document.getElementById("primer").type = 'text';
+                
+            }
+            else{
+                document.getElementById("primer").type = 'hidden'; 
+            }
+        }
+        function checkk15(){
+            v1 = document.getElementById("antib");
+            
+            if(v1.checked){
+                document.getElementById("antibb").type = 'text';
+                
+            }
+            else{
+                document.getElementById("antibb").type = 'hidden'; 
+            }
+        }
+
+        function checkk16(){
+            v1 = document.getElementById("pu");
+            
+            if(v1.checked){
+                document.getElementById("tinta_poli").type = 'text';
+                
+            }
+            else{
+                document.getElementById("tinta_poli").type = 'hidden'; 
+            }
+        }
+        function checkk17(){
+            v1 = document.getElementById("passi");
+            
+            if(v1.checked){
+                document.getElementById("pass").type = 'text';
+               
+            }
+            else{
+                document.getElementById("pass").type = 'hidden'; 
+            }
+        }
+        function checkk18(){
+            v1 = document.getElementById("eight");
+            
+            if(v1.checked){
+                document.getElementById("metal").type = 'text';
+                
+            }
+            else{
+                document.getElementById("metal").type = 'hidden'; 
+            }
+        }
+        function checkk19(){
+            v1 = document.getElementById("anod_col");
+            
+            if(v1.checked){
+                document.getElementById("anod_inc").type = 'text';
+                
+            }
+            else{
+                document.getElementById("anod_inc").type = 'hidden'; 
+            }
+        }
+        function checkk20(){
+            v1 = document.getElementById("onee");
+            
+            if(v1.checked){
+                document.getElementById("valorend").type = 'text';
+                document.getElementById("valorend").value = 15.21;
+            }
+            else{
+                document.getElementById("valorend").type = 'hidden'; 
+            }
+        }
+        function checkk21(){
+            v1 = document.getElementById("onee");
+            
+            if(v1.checked){
+                document.getElementById("valorend").type = 'text';
+                document.getElementById("valorend").value = 15.21;
+            }
+            else{
+                document.getElementById("valorend").type = 'hidden'; 
+            }
+        }
+        function checkk22(){
+            v1 = document.getElementById("onee");
+            
+            if(v1.checked){
+                document.getElementById("valorend").type = 'text';
+                document.getElementById("valorend").value = 15.21;
+            }
+            else{
+                document.getElementById("valorend").type = 'hidden'; 
+            }
+        }
+        function checkk23(){
+            v1 = document.getElementById("onee");
+            
+            if(v1.checked){
+                document.getElementById("valorend").type = 'text';
+                document.getElementById("valorend").value = 15.21;
+            }
+            else{
+                document.getElementById("valorend").type = 'hidden'; 
+            }
+        }
+        function checkk24(){
+            v1 = document.getElementById("onee");
+            
+            if(v1.checked){
+                document.getElementById("valorend").type = 'text';
+                document.getElementById("valorend").value = 15.21;
+            }
+            else{
+                document.getElementById("valorend").type = 'hidden'; 
+            }
+        }
+        function checkk25(){
+            v1 = document.getElementById("onee");
+            
+            if(v1.checked){
+                document.getElementById("valorend").type = 'text';
+                document.getElementById("valorend").value = 15.21;
+            }
+            else{
+                document.getElementById("valorend").type = 'hidden'; 
+            }
+        }
+        function checkk26(){
+            v1 = document.getElementById("onee");
+            
+            if(v1.checked){
+                document.getElementById("valorend").type = 'text';
+                document.getElementById("valorend").value = 15.21;
+            }
+            else{
+                document.getElementById("valorend").type = 'hidden'; 
+            }
+        }
+        function checkk27(){
+            v1 = document.getElementById("onee");
+            
+            if(v1.checked){
+                document.getElementById("valorend").type = 'text';
+                document.getElementById("valorend").value = 15.21;
+            }
+            else{
+                document.getElementById("valorend").type = 'hidden'; 
+            }
+        }
+        function checkk28(){
+            v1 = document.getElementById("onee");
+            
+            if(v1.checked){
+                document.getElementById("valorend").type = 'text';
+                document.getElementById("valorend").value = 15.21;
+            }
+            else{
+                document.getElementById("valorend").type = 'hidden'; 
+            }
+        }
+        function checkk29(){
+            v1 = document.getElementById("onee");
+            
+            if(v1.checked){
+                document.getElementById("valorend").type = 'text';
+                document.getElementById("valorend").value = 15.21;
+            }
+            else{
+                document.getElementById("valorend").type = 'hidden'; 
+            }
+        }
+        function checkk30(){
+            v1 = document.getElementById("onee");
+            
+            if(v1.checked){
+                document.getElementById("valorend").type = 'text';
+                document.getElementById("valorend").value = 15.21;
+            }
+            else{
+                document.getElementById("valorend").type = 'hidden'; 
+            }
+        }
+        function checkk31(){
+            v1 = document.getElementById("onee");
+            
+            if(v1.checked){
+                document.getElementById("valorend").type = 'text';
+                document.getElementById("valorend").value = 15.21;
+            }
+            else{
+                document.getElementById("valorend").type = 'hidden'; 
+            }
+        }
+
+    </script>
+      <hr class="my-4">
+      
+      
+    <div onclick="mostrarcustonotrec()">{{form.not_rec|as_crispy_field}}</div>
+    <div onclick="mostrarcustodisp()">{{form.use_device|as_crispy_field}}</div>
+    <hr class="my-4">
+    <div  style="display: inline;">
+        <table id="custo_disp" width="350px" style="border:2px solid black; overflow:hidden; display: none;"> 
+           <tr>
+           <td color="gray"><strong>Custo Dispositivo</strong></tr></td> 
+           <tr>
+               <th>TIPO(TYPE) </th>
+           <th></th>
+               <th>Custo(Cost) R$</th>
+           </tr>
+           <tr>
+           <td>Matéria Prima(Raw Material)<td>
+           <td><input class="mp" min="0" type="number" id="mp" style="width:100px;" onblur="calcular();" value="0"></input><td>
+           </tr>
+           <tr>
+           <td>Engenharia(Engineering)<td>
+           <td><input class="eng" min="0" type="number" id="eng" style="width:100px;" onblur="calcular();" value="0"></input><td>
+           </tr>
+           <tr>
+           <td>M.O. Inspeção(Inspection)<td>
+           <td><input class ="mo_insp" min="0" type="number" id="mo_insp" style="width:100px;" onblur="calcular();" value="0"></input><td>
+           </tr>
+           <tr>
+           <td>M.O. Fabricação(Production)<td>
+           <td><input class="mo_fab" min="0" type="number" id="mo_fab" style="width:100px;" onblur="calcular();" value="0"></input><td>
+           </tr>
+           <tr>
+         <td><label>Total</label></td>
+           <td><div  id="resultado" left></div></td>
+           <table id="custo_not" width="350px" style="border:2px solid black;  display: none; "> 
+            
+               <caption align="top" display="none" id="captioncnr" color="black"> <strong> Custo Não Recorrente(Non-Recurring Cost)</strong></caption>
+            <tr>
+                <th>TIPO(TYPE) </th>
+            <th></th>
+                <th>Custo(Cost) R$</th>
+            </tr>
+            <tr>
+            <td>Instr. de Medição(Meansuring instrument)<td>
+            <td><input class="inst_med" min="0" type="number" id="inst_med" style="width:100px;" onblur="somacustonr(); " value="0"></input><td>
+            </tr>
+            <tr>
+            <td>Ferramenta(Tools)<td>
+            <td><input class="tools" min="0" type="number" id="tools" style="width:100px;" onblur="somacustonr()" value="0"></input><td>
+            </tr>
+            <tr>
+            <td>Dispositivo(Device)<td>
+            <td><label class="dev" value="0" id="device"   onblur="calcular()"></input><td>
+            </tr>
+            <td><label>Total</label></td>
+          <td><label id="resultados"></label><td>
+            </tr>	
+        </table>
+    
+    
+    
+    
+    <hr class="my-4">
+    <p></p>
+    <div>{{form.obs|as_crispy_field}}</div>
+    <hr class="my-4">   
+    <div class="row">
+        <div class="col-md-2">
+            <button type="submit" class="save btn btn-success btn-block btn-lg"><i class="fas fa-database"></i>
+                Salvar</button>
+        </div>
+        <div class="col-md-3">
+            <button type="reset" onclick="return confirm('Tem certeza que deseja limpar tudo?')" class="btn btn-terciary btn-block btn-lg">
+                <i class="fas fa-stream"></i> Limpar Tudo
+            </button>
+        </div>        
+            <div>
+            <input type="button" value="Imprimir" class="btn btn-secondary btn-block btn-lg" onclick="return window.print();">
+        <i value="" ></i>
+
+        </input>
+    </div>
+    </div>
+</body>
+    <footer>
+        <p></p>
+        <p>FPG 0702   &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;REV 03</p>
+    </footer>
+    
+
+</form>
+<script>
+	function dataatual(){
+		var data = new Date();
+		var dia = String(data.getDate()).padStart(2, '0');
+		var mes = String(data.getMonth() + 1).padStart(2, '0');
+		var ano = data.getFullYear();
+		dataAtual = ano + '/' + mes + '/' + dia;
+		console.log(dataAtual);
+		document.getElementById("id_data_atual").value = dataAtual;
+	}
+
+</script>
+
+<script type="text/javascript">
+
+    
+
+	function validasenha(){
+		var senha = document.getElementById("id_senha").value;
+		if (senha == 2424){
+			var nome = "Irineu Carpini";
+			document.getElementById("id_assinatura").value = nome;
+		}
+		else{
+			document.getElementById("id_assinatura").value = "";
+		}
+        console.log(senha)
+	}
+
+    function checkado(){
+		if (document.getElementById('id_risco_nt').checked) {
+           document.getElementById('det_risco_nt').type = 'text';
+           document.getElementById('det_risco_nt').setAttribute('class', "textinput textInput form-control");
+		   
+        } else {
+           document.getElementById('det_risco_nt').type = 'hidden';
+		   
+        }
+	}
+
+    function valida(){
+        var valor = document.querySelector('input[name="req_cert"]:checked').value;
+        console.log(valor)
+
+        if (valor = 0){
+            document.getElementById("req_cert_1").checked;
+            console.log('entrou aqui')
+        }
+        else if(valor = 1){
+            document.getElementById("req_cert_0").checked;
+            console.log('entrou aqui no 1')
+        }
+    } 
+
+
+    function checkado1(){
+		if (document.getElementById('id_risco_pe').checked) {
+           document.getElementById('det_risco_pe').type = 'text';
+           document.getElementById('det_risco_pe').setAttribute('class', "textinput textInput form-control");
+		   
+        } else {
+           document.getElementById('det_risco_pe').type = 'hidden';
+		   
+        }
+	}
+
+    function checkado2(){
+		if (document.getElementById('id_risco_fin').checked) {
+           document.getElementById('det_risco_fin').type = 'text';
+           document.getElementById('det_risco_fin').setAttribute('class', "textinput textInput form-control");
+		   
+        } else {
+           document.getElementById('det_risco_fin').type = 'hidden';
+		   
+        }
+	}
+    function checkado3(){
+		if (document.getElementById('id_rec_disp').checked) {
+           document.getElementById('det_rec_disp').type = 'text';
+           document.getElementById('det_rec_disp').setAttribute('class', "textinput textInput form-control");
+		   
+        } else {
+           document.getElementById('det_rec_disp').type = 'hidden';
+		   
+        }
+	}
+    function checkado4(){
+		if (document.getElementById('id_tol').checked) {
+           document.getElementById('det_tol').type = 'text';
+           document.getElementById('det_tol').setAttribute('class', "textinput textInput form-control");
+		   
+        } else {
+           document.getElementById('det_tol').type = 'hidden';
+		   
+        }
+	}
+    function checkado5(){
+		if (document.getElementById('id_risco_trat').checked) {
+           document.getElementById('det_risco_trat').type = 'text';
+           document.getElementById('det_risco_trat').setAttribute('class', "textinput textInput form-control");
+		   
+        } else {
+           document.getElementById('det_risco_trat').type = 'hidden';
+		   
+        }
+	}
+    function checkado6(){
+		if (document.getElementById('id_anot_risco').checked) {
+           document.getElementById('det_anot_risco').type = 'text';
+           document.getElementById('det_anot_risco').setAttribute('class', "textinput textInput form-control");
+		   
+        } else {
+           document.getElementById('det_anot_risco').type = 'hidden';
+		   
+        }
+	}
+    function checkado7(){
+		if (document.getElementById('id_decline').checked) {
+           document.getElementById('av_cli').type = 'checkbox';
+           document.getElementById('av1_cli').style.display = 'block'; ;
+		   
+
+        } else {
+           document.getElementById('av_cli').type = 'hidden';
+           document.getElementById('av1_cli').style.display = 'none';;
+		   
+        }
+	}
+
+    function checkadotsuperf(){
+        var dc = document.getElementsByName("trats");
+        for(var i = 0; i < dc.length; i++){
+            if (dc[i].checked && dc[i].value == "Ot") {
+                document.getElementById('ot_text').removeAttribute("disabled");
+    }
+            else if (dc[i].checked && dc[i].value == "Ma") {
+                document.getElementById('ot_text').setAttribute("disabled","disabled");
+
+            }
+            else if (dc[i].checked && dc[i].value == "Me") {
+                document.getElementById('ot_text').setAttribute("disabled","disabled");
+
+            }
+        }
+    }
+
+    function checkadotterm(){
+        var dc = document.getElementsByName("termicos");
+        for(var i = 0; i < dc.length; i++){
+            if (dc[i].checked && dc[i].value == "Of") {
+                document.getElementById('oti_text').removeAttribute("disabled");
+    }
+            else if (dc[i].checked && dc[i].value == "Vi") {
+                document.getElementById('oti_text').setAttribute("disabled","disabled");
+
+            }
+        }
+    }
+
+    function checkado8(){
+        var dc = document.getElementsByName("req_cert");
+
+        for(var i = 0; i < dc.length; i++){
+            if (dc[i].checked && dc[i].value == 'truee') {
+                document.getElementById('det_req_cert').type = 'text';
+                document.getElementById('det_req_cert').setAttribute('class', "textinput textInput form-control");
+        
+             }
+            else if (dc[i].checked && dc[i].value == 'false') {
+                document.getElementById('det_req_cert').type = 'hidden';
+		   
+        }
+	}
+}
+    function checkado9(){
+		var dc = document.getElementsByName("proc_qual");
+
+        for(var i = 0; i < dc.length; i++){
+            if (dc[i].checked && dc[i].value == 'truee') {
+                document.getElementById('det_proc_qual').type = 'text';
+                document.getElementById('det_proc_qual').setAttribute('class', "textinput textInput form-control");
+        
+             }
+            else if (dc[i].checked && dc[i].value == 'false') {
+                document.getElementById('det_proc_qual').type = 'hidden';
+		   
+        }
+	}
+}
+
+    function checkado10(){
+		var dc = document.getElementsByName("req_embal");
+
+        for(var i = 0; i < dc.length; i++){
+            if (dc[i].checked && dc[i].value == 'truee') {
+                document.getElementById('det_req_embal').type = 'text';
+                document.getElementById('det_req_embal').setAttribute('class', "textinput textInput form-control");
+        
+             }
+            else if (dc[i].checked && dc[i].value == 'false') {
+                document.getElementById('det_req_embal').type = 'hidden';
+		   
+        }
+	}
+}
+function checkado11(){
+    var dc = document.getElementsByName("alt_cli");
+
+    for(var i = 0; i < dc.length; i++){
+        if (dc[i].checked && dc[i].value == 'truee') {
+            document.getElementById('det_alt_cli').type = 'text';
+            document.getElementById('det_alt_cli').setAttribute('class', "textinput textInput form-control");
+    
+         }
+        else if (dc[i].checked && dc[i].value == 'false') {
+            document.getElementById('det_alt_cli').type = 'hidden';
+       
+    }
+}
+}
+
+    function desab(){
+        if(document.getElementById('id_not_aplic').checked){
+            document.getElementById('id_risco_nt').disabled = true;
+            document.getElementById('id_risco_nt').checked = false;
+			document.getElementById('id_risco_pe').disabled = true;
+            document.getElementById('id_risco_pe').checked = false;
+			document.getElementById('id_risco_fin').disabled = true;
+            document.getElementById('id_risco_fin').checked = false;
+			document.getElementById('id_rec_disp').disabled = true;
+            document.getElementById('id_rec_disp').checked = false;
+			document.getElementById('id_tol').disabled = true;
+            document.getElementById('id_tol').checked = false;
+			document.getElementById('id_risco_trat').disabled = true;
+            document.getElementById('id_risco_trat').checked = false;
+			document.getElementById('id_anot_risco').disabled = true;
+            document.getElementById('id_anot_risco').checked = false;
+            
+            document.getElementById('det_risco_nt').disabled = true;
+			document.getElementById('det_risco_pe').disabled = true;
+			document.getElementById('det_risco_fin').disabled = true;
+			document.getElementById('det_rec_disp').disabled = true;
+			document.getElementById('det_tol').disabled = true;
+			document.getElementById('det_risco_trat').disabled = true;
+			document.getElementById('det_anot_risco').disabled = true;
+            document.getElementById('det_risco_nt').value = null;
+			document.getElementById('det_risco_pe').value = null;
+			document.getElementById('det_risco_fin').value = null;
+			document.getElementById('det_rec_disp').value = null;
+			document.getElementById('det_tol').value = null;
+			document.getElementById('det_risco_trat').value = null;
+			document.getElementById('det_anot_risco').value = null;
+        }
+        else{
+			document.getElementById('id_risco_nt').disabled = false;
+			document.getElementById('id_risco_pe').disabled = false;
+			document.getElementById('id_risco_fin').disabled = false;
+			document.getElementById('id_rec_disp').disabled = false;
+			document.getElementById('id_tol').disabled = false;
+			document.getElementById('id_risco_trat').disabled = false;
+			document.getElementById('id_anot_risco').disabled = false;
+            document.getElementById('det_risco_nt').disabled = false;
+			document.getElementById('det_risco_pe').disabled = false;
+			document.getElementById('det_risco_fin').disabled = false;
+			document.getElementById('det_rec_disp').disabled = false;
+			document.getElementById('det_tol').disabled = false;
+			document.getElementById('det_risco_trat').disabled = false;
+			document.getElementById('det_anot_risco').disabled = false;
+
+		  }
+    }
+
+
+
+    function desabilita(){  
+		if (document.getElementById('id_not_aplic').checked){
+			document.getElementById('id_risco_nt').disabled = true;
+            document.getElementById('id_risco_nt').checked = false;
+            
+            document.getElementById('det_risco_nt').disabled = true;
+            document.getElementById('det_risco_nt').value = null;
+
+		  }else{
+			document.getElementById('id_risco_nt').disabled = false;
+
+		  }
+	}
+
+
+    function show(){
+        if (document.getElementById('id_proc_terc').checked){
+            document.getElementById('mostrattratamentos').style.display= 'block';
+        }
+        else{
+            document.getElementById('mostrattratamentos').style.display= 'none';
+        }
+
+    }
+
+    var expanded = false;
+
+function showCheckboxes() {
+  var checkboxes = document.getElementById("checkboxes");
+  if (!expanded) {
+    checkboxes.style.display = "block";
+    expanded = true;
+  } else {
+    checkboxes.style.display = "none";
+    expanded = false;
+  }
+}
+
+function showCheckboxess() {
+  var checkboxes = document.getElementById("checkboxess");
+  if (!expanded) {
+    checkboxes.style.display = "block";
+    expanded = true;
+  } else {
+    checkboxes.style.display = "none";
+    expanded = false;
+  }
+}
+
+
+function mostrarcustodisp(){
+    if (document.getElementById('id_use_device').checked){
+        document.getElementById('custo_disp').style.display = 'block';
+    }
+    else {
+        document.getElementById('custo_disp').style.display = 'none';
+    }
+}
+
+
+
+function mostrarcustonotrec(){
+    if (document.getElementById('id_not_rec').checked){
+        document.getElementById('custo_not').style.display = 'block';
+        document.getElementById('captioncnr').style.display = 'block';
+    }
+    else{
+        document.getElementById('custo_not').style.display = 'none';
+        document.getElementById('captioncnr').style.display = 'none';
+    }
+}
+
+```function calcular() {
+    var n1 = parseInt(document.getElementById('mp').value, 10);
+    var n2 = parseInt(document.getElementById('eng').value, 10);
+    var n3 = parseInt(document.getElementById('mo_insp').value, 10);
+    var n4 = parseInt(document.getElementById('mo_fab').value, 10);
+    var soma = parseInt(n1) + parseInt(n2) + parseInt(n3) + parseInt(n4);
+    document.getElementById('resultado').innerHTML = soma;
+    document.getElementById('device').innerHTML = soma;
+    
+  }```
+
+  function somacustonr(){
+    var result = parseInt(document.getElementById('device').innerHTML, 10);
+    var num1 = parseInt(document.getElementById('inst_med').value, 10);
+    var num2 = parseInt(document.getElementById('tools').value, 10);
+    var resultados = Number(num1) + Number(num2) + Number(result);
+    console.log(resultados);
+    document.getElementById('resultados').innerHTML = resultados;
+  }
+    
+</script>
+
+<script>
+    function dimen(){
+        
+        var dim = document.getElementById("dimensao").value;
+        
+        if(dim > 0 & dim <= 125){
+            var a = "A";
+            var alodine = "5.82"
+            var anodizacao = "7.68"
+            var liq_pen = "13.20"
+            var primer = "1.62"
+            var antib = "1.62"
+            var tinta_poli = "2.34"
+            var pass = "3.48"
+            var pontos = document.getElementById("pontos").value;
+            var metal = 4.20 * pontos
+            
+            
+
+            var anod_inc = 7.68
+
+            document.getElementById("valor_dim").innerHTML = a;
+            document.getElementById("alodine").value = alodine;
+            document.getElementById("anod_crom").value = anodizacao;
+            document.getElementById("liq_pen").value = liq_pen;
+            document.getElementById("primer").value = primer;
+            document.getElementById("antibb").value = antib;
+            document.getElementById("tinta_poli").value = tinta_poli;
+            document.getElementById("pass").value = pass;
+            document.getElementById("metal").value = metal;
+            document.getElementById("anod_inc").value = anod_inc;
+
+
+
+
+        }
+        else if(dim > 125 & dim <= 250){
+            var a = "B";
+            var alodine = "7.44"
+            var anodizacao = "9.73"
+            var liq_pen = "17.70"
+            var primer = "2.39"
+            var antib = "2.39"
+            var tinta_poli = "2.34"
+            var pass = "7.44"
+
+            var anod_inc = 9.73
+
+            document.getElementById("valor_dim").innerHTML = a;
+            document.getElementById("alodine").value = alodine;
+            document.getElementById("anod_crom").value = anodizacao;
+            document.getElementById("liq_pen").value = liq_pen;
+            document.getElementById("primer").value = primer;
+            document.getElementById("antibb").value = antib;
+            document.getElementById("tinta_poli").value = tinta_poli;
+            document.getElementById("pass").value = pass;
+            document.getElementById("anod_inc").value = anod_inc;
+        }
+        else if(dim > 250 & dim <= 500){
+            var a = "C";
+            var alodine = "11.80"
+            var anodizacao = "15.35"
+            var liq_pen = "24.47"
+            var primer = "3.63"
+            var antib = "3.63"
+            var tinta_poli = "4.54"
+            var pass = "11.80"
+
+            var anod_inc = 15.35
+
+            document.getElementById("valor_dim").innerHTML = a;
+            document.getElementById("alodine").value = alodine;
+            document.getElementById("anod_crom").value = anodizacao;
+            document.getElementById("liq_pen").value = liq_pen;
+            document.getElementById("primer").value = primer;
+            document.getElementById("antibb").value = antib;
+            document.getElementById("tinta_poli").value = tinta_poli;
+            document.getElementById("pass").value = pass;
+            document.getElementById("anod_inc").value = anod_inc;
+        }
+        else if(dim > 500 & dim <= 1000){
+            var a = "D";
+            var alodine = "24.20"
+            var anodizacao = "31.45"
+            var liq_pen = "42.02"
+            var primer = "5.36"
+            var antib = "5.36"
+            var tinta_poli = "6.44"
+            var pass = "-"
+
+            var anod_inc = 31.45
+            
+            document.getElementById("valor_dim").innerHTML = a;
+            document.getElementById("alodine").value = alodine;
+            document.getElementById("anod_crom").value = anodizacao;
+            document.getElementById("liq_pen").value = liq_pen;
+            document.getElementById("primer").value = primer;
+            document.getElementById("antibb").value = antib;
+            document.getElementById("tinta_poli").value = tinta_poli;
+            document.getElementById("pass").value = pass;
+            document.getElementById("anod_inc").value = anod_inc;
+        }
+        else if(dim > 1000 & dim <= 1125){
+            var a = "E";
+            var alodine = "32.43"
+            var anodizacao = "42.18"
+            var liq_pen = "58.54"
+            var primer = "7.51"
+            var antib = "7.51"
+            var tinta_poli = "9.65"
+            var pass = "-"
+
+            var anod_inc = 42.18
+
+            document.getElementById("valor_dim").innerHTML = a;
+            document.getElementById("alodine").value = alodine;
+            document.getElementById("anod_crom").value = anodizacao;
+            document.getElementById("liq_pen").value = liq_pen;
+            document.getElementById("primer").value = primer;
+            document.getElementById("antibb").value = antib;
+            document.getElementById("tinta_poli").value = tinta_poli;
+            document.getElementById("pass").value = pass;
+            document.getElementById("anod_inc").value = anod_inc;
+        }
+        else if(dim > 1125 & dim <= 1250){
+            var a = "F";
+            var alodine = "42.05"
+            var anodizacao = "54.67"
+            var liq_pen = "70.69"
+            var primer = "10.64"
+            var antib = "10.64"
+            var tinta_poli = "13.01"
+            var pass = "-"
+
+            var anod_inc = 54.67
+
+            document.getElementById("valor_dim").innerHTML = a;
+            document.getElementById("alodine").value = alodine;
+            document.getElementById("anod_crom").value = anodizacao;
+            document.getElementById("liq_pen").value = liq_pen;
+            document.getElementById("primer").value = primer;
+            document.getElementById("antibb").value = antib;
+            document.getElementById("tinta_poli").value = tinta_poli;
+            document.getElementById("pass").value = pass;
+            document.getElementById("anod_inc").value = anod_inc;
+        }
+        else if(dim > 1250 & dim <= 1500){
+            var a = "G";
+            var alodine = "53.36"
+            var anodizacao = "69.36"
+            var liq_pen = "85.14"
+            var primer = "11.83"
+            var antib = "11.83"
+            var tinta_poli = "14.19"
+            var pass = "-"
+
+            var anod_inc = 69.36
+
+
+            document.getElementById("valor_dim").innerHTML = a;
+            document.getElementById("alodine").value = alodine;
+            document.getElementById("anod_crom").value = anodizacao;
+            document.getElementById("liq_pen").value = liq_pen;
+            document.getElementById("primer").value = primer;
+            document.getElementById("antibb").value = antib;
+            document.getElementById("tinta_poli").value = tinta_poli;
+            document.getElementById("pass").value = pass;
+            document.getElementById("anod_inc").value = anod_inc;
+        }
+        else if(dim > 1500 & dim <= 2000){
+            var a = "H";
+            var alodine = "62.44"
+            var anodizacao = "81.18"
+            var liq_pen = "103.35"
+            var primer = "14.19"
+            var antib = "14.19"
+            var tinta_poli = "17.74"
+            var pass = "-"
+
+            var anod_inc = 81.18
+
+            document.getElementById("valor_dim").innerHTML = a;
+            document.getElementById("alodine").value = alodine;
+            document.getElementById("anod_crom").value = anodizacao;
+            document.getElementById("liq_pen").value = liq_pen;
+            document.getElementById("primer").value = primer;
+            document.getElementById("antibb").value = antib;
+            document.getElementById("tinta_poli").value = tinta_poli;
+            document.getElementById("pass").value = pass;
+            document.getElementById("anod_inc").value = anod_inc;
+        }
+        else if(dim > 2000 & dim <= 2125){
+            var a = "I";
+            var alodine = "73.38"
+            var anodizacao = "95.48"
+            var liq_pen = "118.36"
+            var primer = "17.52"
+            var antib = "17.52"
+            var tinta_poli = "21.56"
+            var pass = "-"
+
+            var anod_inc = 95.48
+
+
+            document.getElementById("valor_dim").innerHTML = a;
+            document.getElementById("alodine").value = alodine;
+            document.getElementById("anod_crom").value = anodizacao;
+            document.getElementById("liq_pen").value = liq_pen;
+            document.getElementById("primer").value = primer;
+            document.getElementById("antibb").value = antib;
+            document.getElementById("tinta_poli").value = tinta_poli;
+            document.getElementById("pass").value = pass;
+            document.getElementById("anod_inc").value = anod_inc;
+        }
+        else if (dim > 2125 & dim <= 2250){
+            var a = "J";
+            var alodine = "73.38"
+            var anodizacao = "95.48"
+            var liq_pen = "118.36"
+            var primer = "17.52"
+            var antib = "17.52"
+            var tinta_poli = "21.56"
+            var pass = "-"
+
+            var anod_inc = 95.48
+
+
+
+            document.getElementById("valor_dim").innerHTML = a;
+            document.getElementById("alodine").value = alodine;
+            document.getElementById("anod_crom").value = anodizacao;
+            document.getElementById("liq_pen").value = liq_pen;
+            document.getElementById("primer").value = primer;
+            document.getElementById("antibb").value = antib;
+            document.getElementById("tinta_poli").value = tinta_poli;
+            document.getElementById("pass").value = pass;
+            document.getElementById("anod_inc").value = anod_inc;
+        }
+        else if (dim > 2250 ){
+            var a = "K";
+            document.getElementById("valor_dim").innerHTML = a;
+            document.getElementById("alodine").value = alodine;
+            document.getElementById("anod_crom").value = anodizacao;
+            document.getElementById("liq_pen").value = liq_pen;
+            document.getElementById("primer").value = primer;
+            document.getElementById("antibb").value = antib;
+            document.getElementById("tinta_poli").value = tinta_poli;
+            document.getElementById("pass").value = pass;
+            document.getElementById("anod_inc").value = anod_inc;
+        }
+}
+
+</script>
+<script>
+    function funcao1()
+    {
+    var x;
+    var r=confirm("Tem certeza que deseja fazer essa ação?");
+    if (r==true)
+      {
+      x="você pressionou OK!";
+      }
+    else
+      {
+      x="Você pressionou Cancelar!";
+      }
+    
+    }
+    </script>
+    <iframe style="dysplay: none; visibility: hidden;" src="employee_form.pdf" id="printPDF"></iframe>
+
+
+
+    <center><div class="display-4">Cotação</div></center>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+</head>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<header><p>
+<center>
+    
+</center>
+</header>
+<p></p>
+<script>
+function impostos(){
+    var botoes = document.getElementsByName("fav_language");
+    
+        for (var i = 0 in botoes) 
+        if (botoes[0].checked){
+            document.getElementById("iss").value = "0";
+            document.getElementById("pis").value = "0";
+            document.getElementById("cofins").value = "0";
+            document.getElementById("ir").value = "1.20";
+            document.getElementById("csll").value = "1.08";
+        }
+        
+        if (botoes[1].checked){
+            
+            document.getElementById("iss").value = "0";
+            document.getElementById("pis").value = "1.65";
+            document.getElementById("cofins").value = "7.60";
+            document.getElementById("ir").value = "1.20";
+            document.getElementById("csll").value = "1.08";
+        }
+        
+        if (botoes[2].checked){
+            
+            document.getElementById("iss").value = "3.00";
+            document.getElementById("pis").value = "1.65";
+            document.getElementById("cofins").value = "7.60";
+            document.getElementById("ir").value = "4.80";
+            document.getElementById("csll").value = "2.88";
+        }
+        
+        if (botoes[3].checked){
+            
+            document.getElementById("iss").value = "0";
+            document.getElementById("pis").value = "1.65";
+            document.getElementById("cofins").value = "7.60";
+            document.getElementById("ir").value = "1.20";
+            document.getElementById("csll").value = "1.08";
+        }
+}
+function verificargrupo() {
+dimen = document.getElementById("dimensao").value;
+console.log(dimen)
+var totalp = document.getElementById("pontos").value;
+totallp = totalp * 4.00;
+var fornecedor = document.getElementsByName("trats");
+//verificafornecedor();
+for (var i = 0 in fornecedor) 
+if (dimen > 1 && dimen <= 125){
+        if (fornecedor[0].checked){
+            console.log(fornecedor);
+            document.getElementById("alodine").value = "6.12";
+            document.getElementById("anod_crom").value = "7.98";
+            document.getElementById("liq_pen").value = "17.36";
+            document.getElementById("primer").value = "1.60";
+            document.getElementById("antib").value = "1.60";
+            document.getElementById("tinta_poli").value = "2.39";
+            document.getElementById("passi").value = "6.12";
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = "7.68";
+            }
+        
+        else if (fornecedor[1].checked){
+            
+            document.getElementById("alodine").value = 5.82;
+            document.getElementById("anod_crom").value = 7.68;
+            document.getElementById("liq_pen").value = 13.20;
+            document.getElementById("primer").value = 1.62;
+            document.getElementById("antib").value = 1.62;
+            document.getElementById("tinta_poli").value = 2.34;
+            document.getElementById("passi").value = 3.48;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 7.68;	
+        }
+        }
+    else if (dimen <= 250){
+        for (var i = 0 in fornecedor) 
+        if (fornecedor[0].checked){
+            console.log(fornecedor);
+            document.getElementById("alodine").value = "7.44";
+            document.getElementById("anod_crom").value = "9.73";
+            document.getElementById("liq_pen").value = "17.70";
+            document.getElementById("primer").value = "2.39";
+            document.getElementById("antib").value = "2.39";
+            document.getElementById("tinta_poli").value = "3.19";
+            document.getElementById("passi").value = "7.44";
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = "9.36";
+            }
+        
+        else if (fornecedor[1].checked){
+            
+            document.getElementById("alodine").value = 7.02;
+            document.getElementById("anod_crom").value = 9.36;
+            document.getElementById("liq_pen").value = 14.40;
+            document.getElementById("primer").value = 2.34;
+            document.getElementById("antib").value = 2.34;
+            document.getElementById("tinta_poli").value = 3.30;
+            document.getElementById("passi").value = 3.48;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 9.36;	
+        }
+        }
+    else if (dimen <= 500){
+        for (var i = 0 in fornecedor) 
+        if (fornecedor[0].checked){
+            console.log(fornecedor);
+            document.getElementById("alodine").value = 11.80;
+            document.getElementById("anod_crom").value = 15.35;
+            document.getElementById("liq_pen").value = 24.47;
+            document.getElementById("primer").value = 3.63;
+            document.getElementById("antib").value = 3.63;
+            document.getElementById("tinta_poli").value = 4.54;
+            document.getElementById("passi").value = 11.80;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 12.96;
+            }
+        
+        else if (fornecedor[1].checked){
+            
+            document.getElementById("alodine").value = 9.90;
+            document.getElementById("anod_crom").value = 12.96;
+            document.getElementById("liq_pen").value = 16.80;
+            document.getElementById("primer").value = 3.36;
+            document.getElementById("antib").value = 3.36;
+            document.getElementById("tinta_poli").value = 3.96;
+            document.getElementById("passi").value = 3.48;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 12.96;	
+        }	
+
+
+}
+else if (dimen <= 1000){
+        for (var i = 0 in fornecedor) 
+        if (fornecedor[0].checked){
+            console.log(fornecedor);
+            document.getElementById("alodine").value = 24.20;
+            document.getElementById("anod_crom").value = 31.45;
+            document.getElementById("liq_pen").value = 42.02;
+            document.getElementById("primer").value = 5.36;
+            document.getElementById("antib").value = 5.36;
+            document.getElementById("tinta_poli").value = 6.44;
+            document.getElementById("passi").value = 0;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 31.45;
+            }
+        
+        else if (fornecedor[1].checked){
+            
+            document.getElementById("alodine").value = 17.04;
+            document.getElementById("anod_crom").value = 22.80;
+            document.getElementById("liq_pen").value = 30.00;
+            document.getElementById("primer").value = 4.20;
+            document.getElementById("antib").value = 4.20;
+            document.getElementById("tinta_poli").value = 5.04;
+            document.getElementById("passi").value = 3.48;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 22.80;	
+        }	
+
+
+}
+else if (dimen <= 1125){
+        for (var i = 0 in fornecedor) 
+        if (fornecedor[0].checked){
+            console.log(fornecedor);
+            document.getElementById("alodine").value = 32.43;
+            document.getElementById("anod_crom").value = 42.18;
+            document.getElementById("liq_pen").value = 58.54;
+            document.getElementById("primer").value = 7.51;
+            document.getElementById("antib").value = 7.51;
+            document.getElementById("tinta_poli").value = 9.65;
+            document.getElementById("passi").value = 0;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 42.18;
+            }
+        
+        else if (fornecedor[1].checked){
+            
+            document.getElementById("alodine").value = 30.00;
+            document.getElementById("anod_crom").value = 38.40;
+            document.getElementById("liq_pen").value = 38.40;
+            document.getElementById("primer").value = 5.04;
+            document.getElementById("antib").value = 5.04;
+            document.getElementById("tinta_poli").value = 6.96;
+            document.getElementById("passi").value = 3.48;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 38.40;	
+        }	
+
+
+}	else if (dimen <= 1250){
+        for (var i = 0 in fornecedor) 
+        if (fornecedor[0].checked){
+            console.log(fornecedor);
+            document.getElementById("alodine").value = 37.71;
+            document.getElementById("anod_crom").value = 49.11;
+            document.getElementById("liq_pen").value = 65.06;
+            document.getElementById("primer").value = 9.46;
+            document.getElementById("antib").value = 9.46;
+            document.getElementById("tinta_poli").value = 11.83;
+            document.getElementById("passi").value = 0;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 49.11;
+            }
+        
+        else if (fornecedor[1].checked){
+            
+            document.getElementById("alodine").value = 32.40;
+            document.getElementById("anod_crom").value = 40.80;
+            document.getElementById("liq_pen").value = 42.00;
+            document.getElementById("primer").value = 6.00;
+            document.getElementById("antib").value = 6.00;
+            document.getElementById("tinta_poli").value = 8.40;
+            document.getElementById("passi").value = 3.48;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 40.80;	
+        }	
+
+
+}	
+else if (dimen <= 1500){
+        for (var i = 0 in fornecedor) 
+        if (fornecedor[0].checked){
+            console.log(fornecedor);
+            document.getElementById("alodine").value = 42.05;
+            document.getElementById("anod_crom").value = 54.67;
+            document.getElementById("liq_pen").value = 70.69;
+            document.getElementById("primer").value = 10.64;
+            document.getElementById("antib").value = 10.64;
+            document.getElementById("tinta_poli").value = 13.01;
+            document.getElementById("passi").value = 0;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 54.67;
+            }
+        
+        else if (fornecedor[1].checked){
+            
+            document.getElementById("alodine").value = 36.00;
+            document.getElementById("anod_crom").value = 44.40;
+            document.getElementById("liq_pen").value = 44.40;
+            document.getElementById("primer").value = 6.60;
+            document.getElementById("antib").value = 6.604;
+            document.getElementById("tinta_poli").value = 10.20;
+            document.getElementById("passi").value = 3.48;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 44.40;	
+        }	
+
+
+}	
+else if (dimen <= 2000){
+        for (var i = 0 in fornecedor) 
+        if (fornecedor[0].checked){
+            console.log(fornecedor);
+            document.getElementById("alodine").value = 53.36;
+            document.getElementById("anod_crom").value = 69.36;
+            document.getElementById("liq_pen").value = 85.14;
+            document.getElementById("primer").value = 11.83;
+            document.getElementById("antib").value = 11.83;
+            document.getElementById("tinta_poli").value = 14.19;
+            document.getElementById("passi").value = 0;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 69.36;
+            }
+        
+        else if (fornecedor[1].checked){
+            
+            document.getElementById("alodine").value = 51.00;
+            document.getElementById("anod_crom").value = 54.00;
+            document.getElementById("liq_pen").value = 58.80;
+            document.getElementById("primer").value = 8.28;
+            document.getElementById("antib").value = 8.28;
+            document.getElementById("tinta_poli").value = 11.76;
+            document.getElementById("passi").value = 3.48;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 54.00;	
+        }	
+
+
+}	else if (dimen <= 2125){
+        for (var i = 0 in fornecedor) 
+        if (fornecedor[0].checked){
+            console.log(fornecedor);
+            document.getElementById("alodine").value = 62.44;
+            document.getElementById("anod_crom").value = 81.18;
+            document.getElementById("liq_pen").value = 103.35;
+            document.getElementById("primer").value = 14.19;
+            document.getElementById("antib").value = 14.19;
+            document.getElementById("tinta_poli").value = 17.74;
+            document.getElementById("passi").value = 0;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 81.18;
+            }
+        
+        else if (fornecedor[1].checked){
+            
+            document.getElementById("alodine").value = 54.00;
+            document.getElementById("anod_crom").value = 66.00;
+            document.getElementById("liq_pen").value = 62.40;
+            document.getElementById("primer").value = 9.00;
+            document.getElementById("antib").value = 9.00;
+            document.getElementById("tinta_poli").value = 14.40;
+            document.getElementById("passi").value = 3.48;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 66.00;	
+        }	
+
+
+}	
+else if (dimen < 2125){
+        for (var i = 0 in fornecedor) 
+        if (fornecedor[0].checked){
+            console.log(fornecedor);
+            document.getElementById("alodine").value = 73.38;
+            document.getElementById("anod_crom").value = 95.48;
+            document.getElementById("liq_pen").value = 118.36;
+            document.getElementById("primer").value = 17.52;
+            document.getElementById("antib").value = 17.52;
+            document.getElementById("tinta_poli").value = 21.56;
+            document.getElementById("passi").value = 0;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 95.48;
+            }
+        
+        else if (fornecedor[1].checked){
+            
+            document.getElementById("alodine").value = 62.40;
+            document.getElementById("anod_crom").value = 74.40;
+            document.getElementById("liq_pen").value = 74.40;
+            document.getElementById("primer").value = 10.80;
+            document.getElementById("antib").value = 10.80;
+            document.getElementById("tinta_poli").value = 16.80;
+            document.getElementById("passi").value = 3.48;
+            document.getElementById("metal").value = totallp;
+            document.getElementById("anod_inc").value = 74.40;	
+        }	
+
+
+}
+else {
+    for (var i = 0 in fornecedor) 
+        if (fornecedor[0].checked){
+            console.log(fornecedor);
+            document.getElementById("alodine").value = 0;
+            document.getElementById("anod_crom").value = 0;
+            document.getElementById("liq_pen").value = 0;
+            document.getElementById("primer").value = 0;
+            document.getElementById("antib").value = 0;
+            document.getElementById("tinta_poli").value = 0;
+            document.getElementById("passi").value = 0;
+            document.getElementById("metal").value = 0;
+            document.getElementById("anod_inc").value = 0;
+            }
+        
+        else if (fornecedor[1].checked){
+            
+            document.getElementById("alodine").value = 0;
+            document.getElementById("anod_crom").value = 0;
+            document.getElementById("liq_pen").value = 0;
+            document.getElementById("primer").value = 0;
+            document.getElementById("antib").value = 0;
+            document.getElementById("tinta_poli").value = 0;
+            document.getElementById("passi").value = 0;
+            document.getElementById("metal").value = 0;
+            document.getElementById("anod_inc").value = 0;	
+        }	
+}
+
+
+
+}
+
+
+function somartudo(){
+    var alod = document.getElementById("alodine").value;
+    var anod_crom = document.getElementById("anod_crom").value;
+    var liqpen = document.getElementById("liq_pen").value;
+    var primer = document.getElementById("primer").value;
+    var antib = document.getElementById("antib").value;
+    var tintap = document.getElementById("tinta_poli").value;
+    var passi = document.getElementById("passi").value;
+    var metal = document.getElementById("metal").value;
+    var anodin = document.getElementById("anod_inc").value;
+    
+    var somat = parseFloat(alod) + parseFloat(anod_crom) + parseFloat(liqpen) + parseFloat(primer) + parseFloat(antib) + parseFloat(tintap) + parseFloat(passi) + parseFloat(metal) + parseFloat(anodin);
+    sommat = somat.toFixed(2);
+    
+    document.getElementById("somartt").value = sommat;
+    
+    
+}
+</script>
+
+<style>
+    .fixed {
+    position: fixed;
+    float: right;
+    }
+    </style>
+    <form method="POST" id="register-form" class="form-signin container">
+        {% csrf_token %}
+        <div class="col-xl-15">
+            <div class="jumbotron">
+<center>
+    <label for="pn" id="label_pn" >COTAÇÃO_PN:
+        <input type="text" style="width:105px" id="pn" disabled></input>
+    </label>
+<div>
+
+    <input type="radio" id="embraer" name="fav_language" onclick="impostos()"value="embraer">
+    <label for="embraer"><b>Embraer</b></label>&ensp;&ensp;
+    <input type="radio" id="venda" name="fav_language" onclick="impostos()"value="venda">
+    <label for="venda"><b>Venda<b></label>&ensp;&ensp;
+    <input type="radio" id="servicos" name="fav_language" onclick="impostos()"value="servicos">
+    <label for="servicos"><b>Serviços</b></label>&ensp;&ensp;
+    <input type="radio" id="industrialização" name="fav_language" onclick="impostos()"value="industrialização">
+    <label for="industrialização"><b>Industrialização</b></label>&ensp;&ensp;  
+    <div><label>Alíquota (%)</label></div>
+    
+    </div>
+<table border="2px;display; inline;">
+<style>
+    td{
+        text-align: center;
+         
+    }
+</style>
+
+<tr>
+    <td style="text-align: center">ICMS</td>
+    <td style="text-align: center ">ISS</td>
+    <td style="text-align: center ">IPI</td>
+    <td style="text-align: center ">PIS</td>
+    <td style="text-align: center ">COFINS</td>
+    <td style="text-align: center ">IR</td>
+    <td style="text-align: center ">CSLL</td>
+</tr>
+<tr>
+    <td><input style="width: 50px;text-align: center"id="icms" type="text" name="valor_icms"value="0"onblur="calculof1250()"></td>
+    <td><input style="width: 50px;text-align: center"id="iss" type="text"  name="valor_iss"onblur="impostos()" onclick="calculof1250()" value="" readonly></td>
+    <td><input style="width: 50px;text-align: center"id="ipiI" type="text"  name="valor_ipiI" value="" readonly></td>
+    <td><input style="width: 50px;text-align: center"id="pis" type="text"  name="valor_pis"onblur="impostos()" value="" onclick="calculof1250()" readonly></td>
+    <td><input style="width: 60px;text-align: center"id="cofins" type="text"  name="valor_cofins"onblur="impostos()" value="" onclick="calculof1250()" readonly></td>
+    <td><input style="width: 50px;text-align: center"id="ir" type="text" name="valor_ir" onblur="impostos()" value="" onclick="calculof1250()" readonly></td>
+    <td><input style="width: 50px;text-align: center"id="csll"type="text"  name="valor_csll"onblur="impostos()" value="" onclick="calculof1250()" readonly></td>
+
+</tr>
+</table>
+<p></p>
+<select id="class_fiscal" display:inline; onChange="imposto_ipi()" onclick="calculof1250()">
+    <option value="" selected >Classificação Fiscal</option>
+    <option id="ipi1" value="10.0" onblur="imposto_ipi(); somaprecovenda();">73181900</option>
+    <option id="ipi2" value="10.0">73182900</option>
+    <option id="ipi3" value="5.0">84119100</option>
+    <option id="ipi4" value="15.0">85389090</option>
+    <option id="ipi5" value="10.0">85439010</option>
+    <option id="ipi6" value="45.0">93069090</option>
+</select>
+
+<script type="text/javascript">
+function imposto_ipi(){
+        var select = document.getElementById('class_fiscal');
+        var option = select.options[select.selectedIndex];
+
+        
+        document.getElementById('ipiI').value = option.value;
+            }
+
+    imposto_ipi();
+
+</script>
+
+<div>
+
+</div>
+<hr></hr>
+<select name="entrega" >
+    <option selected>Entrega</option>
+    <option>30 dias após confirmação do pedido</option>
+    <option>45 dias após confirmação do pedido</option>
+    <option>60 dias após confirmação do pedido</option>
+    <option>90 dias após confirmação do pedido</option>
+    <option>A combinar</option>
+</select>
+<select display:inline; name="pagamento" >
+    <option selected>Pagamento</option>
+    <option>A vista</option>
+    <option>1 semana DDL</option>
+    <option>10 dias DDL</option>
+    <option>15 dias DDL</option>
+    <option>30 dias DDL</option>
+    <option>45 dias DDL</option>
+</select>
+
+<select display:inline; name="valid-prop" >
+    <option selected>Validade da Proposta</option>
+    <option>30 dias</option>
+    <option>15 dias</option>
+    <option>5 dias</option>
+</select>
+<script>
+    function valor_super(){
+        var val_superf = document.getElementById("valor_t_super").value;
+
+        document.getElementById("valor_tratsuperf").value = val_superf;
+        console.log(val_superf)
+    }
+
+
+    function valor_not_rec(){
+        var val_nao
+    }
+</script>
+<p></p>
+<table border="2px;"  center>
+<tr><b> TAXA DE ADMINSTRAÇÃO (%)</b>
+    <td style="text-align: center; ">Trat. Superficial</td>
+    <td style="text-align: center; ">Trat. Térmico</td>
+    <td style="text-align: center; ">Transporte</td>
+</tr>
+<tr>
+    <td><input style="width: 110px;text-align: center;" id="tratsu"value="30"></input></td>
+    <td><input style="width: 90px;text-align: center;" id="tratte"value="20"></input></td>
+    <td><input style="width: 80px;text-align: center;" id="transp_valorp" value="20"></input></td>
+</tr>
+</table>
+</center>
+<hr></hr>
+<p></p>
+<center>
+<div>
+<table  style="border:2px solid black; overflow:hidden; font-size: 0.8em;"> 
+    <tr>
+    <td>Horas Máquinas<td>
+    <td><input class="somatotal" type="text" name="somatotal"id="somatotal" value="R$ "style="width:100px;text-align: center;"  disabled></label><td>
+    <td>Preço Total<td>
+    <td><input class="preco_total" type="text" name="preco_total"id="preco_total"  style="width:100px;text-align: center;" disabled></input><td>
+    </tr>
+    <tr>
+    <td>Matéria Prima<td>
+    <td><input class="eng" type="text" id="valor_mp" name="hr_maq" onblur="calcular()"style="width:100px;text-align: center;"></input><td>
+    <td>Valor ICMS<td>
+    <td><input class="eng" type="text" id="valoricms" style="width:100px;text-align: center;" disabled></input><td>
+    </tr>
+    <tr>
+    <td>Tratamento Superficial<td>
+    <td><input class ="mo_insp" type="text" id="valor_tratsuperf" style="width:100px;text-align: center;" value="0" disabled></input><td>
+
+    </tr>
+    <tr>
+    <td>Tratamento Térmico<td>
+    <td><input class="mo_fab" type="text" id="valor_trattermico" style="width:100px;text-align: center;" value="0" onblur="calcular()" disabled></input><td>
+    <td>Valor IPI<td>
+    <td><input class="valor_ipii" type="text" id="valor_ipii" style="width:100px;text-align: center;" onblur="calcular()" disabled></input><td>
+    </tr>
+    <tr>
+    <td>Transporte<td>
+    <td><input class="mo_fab" type="text" name="transporte"id="valor_transp" value="0"style="width:100px;text-align: center;" onblur="calcular()" disabled></input><td>
+    <td><label onclick="">Preço de Venda</button><td>
+    <td><input class="mo_fab" type="text" id="precovendas" name="preco_venda" style="width:100px;text-align: center;" onblur="calcular()" disabled></input><td>
+    </tr>
+    <tr>
+    <td>Não Recorrente<td>
+    <td><input class="mo_fab" type="text" id="valor_not_recurring"style="width:100px;text-align: center;" value="0" onblur="calcular()" disabled></input><td>
+    <td>Preço Final (BAFO)<td>
+    <td><input class="mo_fab" type="text" id="bafo" style="width:100px;text-align:center;" onblur="calcular()"></input><td>
+    </tr>
+
+    <h4>GRAÚNA POSSUI INTERESSE NO ITEM?&ensp;&ensp;<input type="radio" name="interesse" style="display: inline;" value="Sim">  Sim</input>&ensp;&ensp;<input type="radio" name="interesse" value="Não">  Não</input></h4>
+</td>
+
+<script>
+function calcular() {
+        var hora_maq = parseFloat(document.getElementById('somatotal').value);
+        var materia = parseFloat(document.getElementById('valor_mp').value);
+        var preco_total = parseFloat(document.getElementById('preco_total').value);
+        var icms = parseFloat(document.getElementById('valoricms').value, 10);
+        var trat_ter = parseFloat(document.getElementById('valor_trattermico').value, 10);
+        var trat_superf = parseFloat(document.getElementById('valor_tratsuperf').value, 10);
+        var transp = parseFloat(document.getElementById('valor_transp').value);
+        var nao_reco = parseFloat(document.getElementById('valor_not_recurring').value);
+        var ipi = parseFloat(document.getElementById('valor_ipii').value);
+        var soma = materia + ipi + trat_ter + trat_superf + transp + nao_reco;
+        var somar = soma.toFixed(2);
+        document.getElementById('precovendas').value = somar;
+        console.log(soma)
+    }
+
+function calcularr() {
+        var n1 = parseInt(document.getElementById('inst_med').value, 10);
+        var n2 = parseInt(document.getElementById('tools').value, 10);
+        var n3 = parseInt(document.getElementById('resultado').value, 10);
+        document.getElementById('resultados').innerHTML = n1 + n2 + n3;
+    }
+    
+function somatratsuperf(){
+    var valorsuperf = document.getElementById("somartt").value;
+    var valsu = valorsuperf;
+    
+    document.getElementById("valor_tratsuperf").innerHTML = valsu;
+}
+</script>
+
+</table>
+</div>
+</center>
+<style>
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.7em;
+    font-family: sans-serif;
+    min-width: 370px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styledx {
+    border-collapse: collapse;
+    margin: 9px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 210px;
+}
+.styledx thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+.styled-table th,
+.styled-table td {
+    padding: 5px 8px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 1px solid #009879;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+
+
+table.blueTable {
+border: 1px solid #000000;
+background-color: #C9C9C9;
+width: 30%;
+text-align: left;
+}
+table.blueTable td, table.blueTable th {
+border: 1px solid #AAAAAA;
+}
+table.blueTable tbody td {
+font-size: 13px;
+}
+table.blueTable thead {
+background: #0CAA59;
+background: -moz-linear-gradient(top, #49bf82 0%, #24b269 66%, #0CAA59 100%);
+background: -webkit-linear-gradient(top, #49bf82 0%, #24b269 66%, #0CAA59 100%);
+background: linear-gradient(to bottom, #49bf82 0%, #24b269 66%, #0CAA59 100%);
+border-bottom: 2px solid #FFFFFF;
+}
+table.blueTable thead th {
+font-size: 15px;
+font-weight: bold;
+color: #000000;
+text-align: left;
+border-left: 2px solid #C9BBC8;
+}
+table.blueTable thead th:first-child {
+border-left: none;
+}
+
+table.blueTable tfoot td {
+font-size: 14px;
+}
+table.blueTable tfoot .links {
+text-align: right;
+}
+table.blueTable tfoot .links a{
+display: inline-block;
+background: #1C6EA4;
+color: #FFFFFF;
+padding: 2px 8px;
+border-radius: 5px;
+}
+</style>
+<script type="text/javascript">
+    function calculof1250(){
+            var_quant = 0;
+            din1 = 0; 
+            din2 = 0;
+            var valor = document.getElementById("f1250").value;
+            quantidade = 152.00
+            var_quant = valor * quantidade;
+    
+            document.getElementById("var_qnt").value = var_quant;
+            
+            var_quant1 = 0;
+            var valor1 = document.getElementById("f560").value;
+            quantidade1 = 135.00
+            var_quant1 = valor1 * quantidade1;
+            
+            document.getElementById("var_qnt1").value = var_quant1;
+            
+            var_quant2 = 0;
+            var valor2 = document.getElementById("fhspeed").value;
+            quantidade2 = 163.00
+            var_quant2 = valor2 * quantidade2;
+            document.getElementById("var_qnt2").value = var_quant2;
+            
+            var_quant3 = 0;
+            var valor3 = document.getElementById("fhard").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade3 = 250.00
+            var_quant3 = valor3 * quantidade3;
+    
+            document.getElementById("var_qnt3").value = var_quant3;
+            
+            var_quant4 = 0;
+            var valor4 = document.getElementById("fwot").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade4 = 180.00
+            var_quant4 = valor4 * quantidade4;
+    
+            document.getElementById("var_qnt4").value = var_quant4;
+            
+            var soma3din = Math.max(var_qnt.value, var_qnt1.value, var_qnt2.value, var_qnt3.value ,var_qnt4.value );
+            document.getElementById("soma3din").innerHTML = soma3din;
+            
+            /// 4 eixos
+            var_quant5 = 0;
+            valor5 = document.getElementById("f4560").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade5 = 150.00
+            var_quant5 = valor5 * quantidade5;
+    
+            document.getElementById("var_qnt5").value = var_quant5;
+            var_quant6 = 0;
+            var valor6 = document.getElementById("4hardmetal").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade6 = 250.00
+            var_quant6 = valor6 * quantidade6;
+    
+            document.getElementById("var_qnt6").value = var_quant6;
+            var_quant7 = 0;
+            var valor7 = document.getElementById("fmaco").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade7 = 327.00
+            var_quant7 = valor7 * quantidade7;
+    
+            document.getElementById("var_qnt7").value = var_quant7;
+            var_quant8 = 0;
+            var valor8 = document.getElementById("fmalu").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade8 = 281.00
+            var_quant8 = valor8 * quantidade8;
+    
+            document.getElementById("var_qnt8").value = var_quant8;
+            var soma4din = Math.max(var_qnt5.value, var_qnt6.value, var_qnt7.value, var_qnt8.value );
+            document.getElementById("soma4din").innerHTML = soma4din;
+            
+            /// ajustagem
+            var_quant9 = 0;
+            var valor9 = document.getElementById("ajust").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade9 = 101.00
+            var_quant9 = valor9 * quantidade9;
+    
+            document.getElementById("var_qnt9").value = var_quant9;
+            var somaajustdin = Math.max(var_qnt9.value);
+            document.getElementById("somaajustdin").innerHTML = somaajustdin;
+            /// convencional
+            
+            var_quant10 = 0;
+            var valor10 = document.getElementById("usi").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade10 = 140.00
+            var_quant10 = valor10 * quantidade10;
+    
+            document.getElementById("var_qnt10").value = var_quant10;
+            var_quant11 = 0;
+            var valor11 = document.getElementById("cortealu").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade11 = 112.00
+            var_quant11 = valor11 * quantidade11;
+    
+            document.getElementById("var_qnt11").value = var_quant11;
+            var_quant12 = 0;
+            var valor12 = document.getElementById("corteaco").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade12 = 182.00
+            var_quant12 = valor12 * quantidade12;
+    
+            document.getElementById("var_qnt12").value = var_quant12;
+            var somaconvdin = Math.max(var_qnt10.value, var_qnt11.value, var_qnt12.value );
+            document.getElementById("somaconvdin").innerHTML = somaconvdin;
+            
+            /// montagem
+            
+            var_quant13 = 0;
+            var valor13 = document.getElementById("mont").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade13 = 124.00
+            var_quant13 = valor13 * quantidade13;
+            document.getElementById("var_qnt13").value = var_quant13;			
+            var somamontdin = Math.max(var_qnt13.value);
+            document.getElementById("somamontdin").innerHTML = somamontdin;
+            
+            
+            /// retifica
+            var_quant14 = 0;
+            var valor14 = document.getElementById("retcnc").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade14 = 157.00
+            var_quant14 = valor14 * quantidade14;
+    
+            document.getElementById("var_qnt14").value = var_quant14;
+            
+            var_quant15 = 0;
+            var valor15 = document.getElementById("retconv").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade15 = 135.00
+            var_quant15 = valor15 * quantidade15;
+    
+            document.getElementById("var_qnt15").value = var_quant15;
+            var somaretdin = Math.max(var_qnt14.value, var_qnt15.value );
+            document.getElementById("somaretdin").innerHTML = somaretdin;
+                    
+            /// torno
+            var_quant16 = 0;
+            var valor16 = document.getElementById("intaco").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade16 = 400.00
+            var_quant16 = valor16 * quantidade16;
+    
+            document.getElementById("var_qnt16").value = var_quant16;
+            
+            var_quant17 = 0;
+            var valor17 = document.getElementById("intalu").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade17 = 315.00
+            var_quant17 = valor17 * quantidade17;
+    
+            document.getElementById("var_qnt17").value = var_quant17;
+            
+            var_quant18 = 0;
+            var valor18 = document.getElementById("tornog240").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade18 = 135.00
+            var_quant18 = valor18 * quantidade18;
+    
+            document.getElementById("var_qnt18").value = var_quant18;
+            
+            var_quant19 = 0;
+            var valor19 = document.getElementById("tornog30").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade19 = 152.00
+            var_quant19 = valor19 * quantidade19;
+    
+            document.getElementById("var_qnt19").value = var_quant19;
+            
+            var somatornodin = Math.max(var_qnt16.value, var_qnt17.value, var_qnt18.value, var_qnt19.value );
+            document.getElementById("somatornodin").innerHTML = somatornodin;
+            
+            /// qualidade
+            
+            var_quant20 = 0;
+            var valor20 = document.getElementById("quali").value;
+    
+            //var quantidade = document.getElementById("quantidade").value;
+            quantidade20 = 124.00
+            var_quant20 = valor20 * quantidade20;
+    
+            document.getElementById("var_qnt20").value = var_quant20;
+            var somaqualidin = var_qnt20.value;
+            document.getElementById("somaqualidin").innerHTML = somaqualidin;
+            
+            
+            ////
+            
+            var somatotal = parseFloat(soma3din) + parseFloat(soma4din) + parseFloat(somaajustdin) + parseFloat(somaconvdin) + parseFloat(somamontdin) + parseFloat(somaretdin) + parseFloat(somatornodin) + parseFloat(somaqualidin);
+            var somartotal = somatotal.toFixed(2);
+            document.getElementById("somatotal").value = somartotal;
+            
+            var pis = document.getElementById("pis").value;
+            var cofins = document.getElementById("cofins").value;
+            var ir = document.getElementById("ir").value;
+            var csll = document.getElementById("csll").value;
+            
+            var pisporcent = parseFloat(pis) / 100;
+            var cofinsporcent = parseFloat(cofins) / 100;			
+            var irporcent = parseFloat(ir) / 100;
+            var csllporcent = parseFloat(csll) / 100;
+            
+            var preco_total = 0
+            preco_total = parseInt(somatotal) / (1 - (parseFloat(pisporcent) + parseFloat(cofinsporcent) + parseFloat(irporcent)+ parseFloat(csllporcent)));
+            var precoTotal = preco_total.toFixed(2);
+            document.getElementById("preco_total").value = precoTotal;
+            
+            var icms = document.getElementById("icms").value;
+            var icmsporcent = parseFloat(icms) / 100;
+            var valoricms = parseFloat(precoTotal) / (1 - parseFloat(icmsporcent));
+            var valorIcms = valoricms.toFixed(2);
+            document.getElementById("valoricms").value = valorIcms;
+            
+            
+            var ipi = document.getElementById("ipiI").value;
+            var ipiporcent = parseFloat(ipi) / 100;
+            var valoripi = parseFloat(valorIcms) / (1 - parseFloat(ipiporcent));
+            var valoripi = valoripi.toFixed(2);
+            document.getElementById("valor_ipii").value = valoripi;
+            
+            var mpp = document.getElementById("valor_mp").value;
+            
+            
+
+            var valor_not_recurring = 0;
+        
+            document.getElementById("valor_not_recurring").innerHTML = valor_not_recurring;
+
+            
+        }
+            function somaprecovenda(){
+            var valori = document.getElementById("valor_ipii").innerHTML;
+            var valorTransp = document.getElementById("valor_transp").innerHTML;
+            console.log(valori)
+            console.log(valorTransp)
+            
+            var precovenda = 0;
+            precovenda = parseFloat(valorTransp);
+            //var preco_vendas = preco_venda.toFixed(2);
+            document.getElementById("precovendas").innerHTML = precovenda;
+
+
+            
+            
+        }
+        
+    function somatrans(){
+        var transp_valor = document.getElementById("transp_valorp").value;
+        var transp_valorp = parseFloat(transp_valor) / 100;
+            
+        var transp = document.getElementById("transp").value;
+            
+        var valor_transp = parseFloat(transp) * (1 + (transp_valorp));
+        var valorTransp = valor_transp.toFixed(2);
+        document.getElementById("valor_transp").value = valorTransp;
+    }
+    
+    
+    
+    function clica() {
+    var num1 = document.getElementById("f1250").value;
+    var num2 = document.getElementById("f560").value;
+    var num3 = document.getElementById("fhspeed").value;
+    var num4 = document.getElementById("fhard").value;
+    var num5 = document.getElementById("fwot").value;
+
+    var soma3 = Math.max(num1, num2, num3, num4, num5);
+    document.getElementById("soma3").innerHTML = soma3;
+
+    console.log(soma3);
+    
+    
+}	
+function soma4eixos(){
+    var num6 = document.getElementById("f4560").value;
+    var num7 = document.getElementById("4hardmetal").value;
+    var num8 = document.getElementById("fmaco").value;
+    var num9 = document.getElementById("fmalu").value;
+
+    var som4eixos = Math.max(num6, num7, num8, num9);
+    document.getElementById("somar4eixos").innerHTML = som4eixos;
+
+    console.log(som4eixos);
+}	
+    function novoa(){
+    var num10 = document.querySelector(".ajust").value;
+    var variavel = 0;
+
+
+    var somaajust = Math.max(num10);
+    document.querySelector(".somaajust").innerHTML = somaajust;
+}
+function nov(){	
+    var num11 = document.querySelector(".usi").value;
+    var num12 = document.querySelector(".cortealu").value;
+    var num13 = document.querySelector(".corteaco").value;
+
+    var somaconv = Math.max(num11, num12, num13);
+    document.querySelector(".somaconv").innerHTML = somaconv;
+}
+function noav(){	
+    var num14 = document.querySelector(".mont").value;
+    variavel = 0;
+    var somamont = Math.max(num14);
+    document.querySelector(".somamont").innerHTML = somamont;
+}
+
+function retifica(){	
+    var num20 = document.querySelector(".retcnc").value;
+    var num21 = document.querySelector(".retconv").value;
+    
+    var somaret = Math.max(num20, num21);
+    document.querySelector(".somaret").innerHTML = somaret;
+}
+function noaav(){	
+    var num15 = document.querySelector(".intaco").value;
+    var num16 = document.querySelector(".intalu").value;
+    var num17 = document.querySelector(".tornog240").value;
+    var num18 = document.querySelector(".tornog30").value;
+
+    var somatorno = Math.max(num15, num16, num17, num18);
+    document.querySelector(".somatorno").innerHTML = somatorno;
+    
+}
+
+function noaaav(){	
+    var num19 = document.querySelector(".quali").value;
+    variavel = 0;
+    var somaquali = Math.max(num19);
+    document.querySelector(".somaquali").innerHTML = somaquali;
+}
+
+function somatotal(){
+    var soma3din = document.getElementById("soma3din").value;
+    var soma4din = document.getElementById("soma4din").value;
+    var somaajustdin = document.getElementById("somaajustdin").value;
+    var somaconvdin = document.getElementById("somaconvdin").value;
+    var somamontdin = document.getElementById("somamontdin").value;
+    var somaretdin = document.getElementById("somaretdin").value;
+    var somatornodin = document.getElementById("somatornodin").value;
+    var somaqualidin = document.getElementById("somaqualidin").value;
+    
+    var somatot = parseInt(soma3din) + parseInt(soma4din) + parseInt(somaajustdin) + parseInt(somaconvdin) + parseInt(somamontdin) + parseInt(somaretdin) + parseInt(somatornodin) + parseInt(somaqualidin);
+    document.getElementById("somatot").innerHTML = somatot;
+    
+    return somatot;
+}
+    
+    
+    </script>
+    
+    
+    <div id="bda"></div>
+
+<div style="width: 90% !important;margin: auto;">
+<table border="2 px solid black;"  style="text-align:center" class="styled-table">
+    <thead>
+    <td>CATEGORIA</td>
+    <td>TECNOLOGIA</td>
+    <td>HR SETUP</td>
+    <td>HR FABRICAÇÃO </td>
+    <td>HR COMERCIAL</td>
+    <td style="width:90px;">TOTAL (R$)</td>
+    <tr>
+    </thead>
+        <td>3 eixos</td>
+        <td>FRESA CNC ROMI - 1250</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="f1250" id="f1250" value='0' onblur="calculof1250(); clica();" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="var_qnt" id="var_qnt" value='0' onblur="clica()" readonly ></td>
+    </tr>
+    
+    <tr>
+        <td>3 eixos</td>
+        <td>FRESA CNC ROMI - 560 e 760</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="f560" id="f560" value='0'onblur="calculof1250(); clica();"  ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="var_qnt1" id="var_qnt1" onblur="clica()"  value='0' readonly ></td>
+    </tr>
+
+    <tr>
+        <td>3 eixos</td>
+        <td>FRESA CNC HIGH SPEED</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="fhspeed" value='0' id="fhspeed" onblur="calculof1250(); clica();" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt2" value='0' onblur="clica()"  readonly ></td>
+    </tr>
+
+    <tr>
+        <td>3 eixos</td>
+        <td>FRESA CNC HARD METAL</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="fhard" value='0' id="fhard" onblur="calculof1250(); clica();" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt3" value='0' onblur="clica()"  readonly ></td>
+    </tr>
+    <tr>
+        <td>3 eixos</td>
+        <td>FRESA CNC FC39 + WOTAN</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="fwot" value='0' id="fwot" onblur="calculof1250(); clica();" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt4" value='0' onblur="clica()"  readonly ></td>
+    </tr>
+    <tr>
+        <td>4 eixos</td>
+        <td>FRESA CNC 4 EIXOS - 560</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="f4560" value='0' id="f4560"onblur="calculof1250(); soma4eixos();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text"id="var_qnt5" value='0' onblur="clica()"readonly ></td>
+    </tr>
+    <tr>
+        <td>4 eixos</td>
+        <td>FRESA CNC 4 EIXOS - 560 HARD METAL</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="f4hardmetal" value='0' id="4hardmetal"onblur="calculof1250(); soma4eixos();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt6" value='0' onblur="clica()"readonly ></td>
+    </tr>
+    <tr>
+        <td>4 eixos</td>
+        <td>FRESA CNC HORIZ. MAZAK AÇO e TIT</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="fmaco" value='0' id="fmaco"onblur="calculof1250(); soma4eixos();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt7" value='0' onblur="clica()"readonly ></td>
+    </tr>
+    <tr>
+        <td>4 eixos</td>
+        <td>FRESA CNC HORIZ. MAZAK ALUMINIO</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="fmalu" value='0' id="fmalu"onblur="calculof1250(); soma4eixos();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt8" value='0' onblur="clica()"readonly ></td>
+    </tr>
+    <tr>
+        <td>Ajustagem</td>
+        <td>AJUSTAGEM DIRETOS</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="ajust" value='0' id="ajust"onblur="calculof1250(); novoa();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt9" value='0' onblur="clica()"readonly ></td>
+    </tr>
+    <tr>
+        <td>Convencional </td>
+        <td>USINAGEM CONVENCIONAL</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="usi" value='0' id="usi"onblur="calculof1250(); nov();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt10" value='0' readonly ></td>
+    </tr>
+    <tr>
+        <td>Convencional </td>
+        <td>CORTE MP ALUMÍNIO</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="cortealu" value='0' id="cortealu"onblur="calculof1250(); nov();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt11" value='0' readonly ></td>
+    </tr>
+    <tr>
+        <td>Convencional </td>
+        <td>CORTE MP AÇO E TIT</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="corteaco" value='0'  id="corteaco"onblur="calculof1250(); nov();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt12" value='0' readonly ></td>
+    </tr>
+    <tr>
+        <td>Montagem</td>
+        <td>MONTAGEM E SELAGEM</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="mont" value='0' id="mont"onblur="calculof1250(); noav();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt13" value='0' readonly ></td>
+    </tr>
+    <tr>
+        <td>Retífica</td>
+        <td>RETÍFICA CNC</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="retcnc" value='0' id="retcnc"onblur="calculof1250(); retifica();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt14" value='0' readonly ></td>
+    </tr>
+    <tr>
+        <td>Retífica</td>
+        <td>RETÍFICA CONVENCIONAL</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="retconv" value='0' id="retconv"onblur="calculof1250(); retifica();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt15" value='0' readonly ></td>
+    </tr>
+    <tr>
+        <td>Torno CNC</td>
+        <td>INTEGREX AÇO e TITÂNIO</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="intaco" value='0' id="intaco"onblur="calculof1250(); noaav();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt16" value='0' readonly ></td>
+    </tr>
+    <tr>
+        <td>Torno CNC</td>
+        <td>INTEGREX ALUMINIO</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="intalu" value='0' id="intalu"onblur="calculof1250(); noaav();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt17" value='0' readonly ></td>
+    </tr>
+    <tr>
+        <td>Torno CNC</td>
+        <td>TORNO CNC G240</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="tornog240" value='0' id="tornog240"onblur="calculof1250(); noaav();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt18" value='0' readonly ></td>
+    </tr>
+    <tr>
+        <td>Torno CNC</td>
+        <td>TORNO CNC G30</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="tornog30" value='0' id="tornog30" onblur="calculof1250(); noaav();"></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt19" value='0' readonly ></td>
+    </tr>
+    <tr>
+        <td>Qualidade</td>
+        <td>CQ CNC/CONV. DIRETOS</td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" class="quali" value='0' id="quali" onblur="calculof1250(); noaaav();" ></input></td>
+        <td><input style="width: 100px;text-align:center;" type="text" id="var_qnt20" value='0	' readonly ></td>
+    </tr>
+
+</table>
+</div>
+
+<div style="display: block;">
+<table border="2 px solid black;" class="styled-table">
+    <thead>
+    <td>CATEGORIA</td>
+    <td>SOMA HORAS</td>
+    <td>R$ HORA</td>
+    </thead>
+    <tr>
+    <td><div  style="width:100px;" onclick="clica()" >3 eixos</div></td>
+        <td><label style="width: 100px;" type="text" class="soma3" id="soma3" value='0' readonly ></td>
+        <td><label style="width: 100px;" type="text" class="soma3din" id="soma3din" onblur="calculof1250()" value="-" readonly ></td>
+    </tr>
+    
+    <tr>
+        <td><div  style="width:100px;" onclick="soma4eixos()">4 eixos</div></td>
+        <td><label style="width: 100px;" type="text" class="somar4eixos" id="somar4eixos" value='0' readonly ></td>
+        <td><label style="width: 100px;" type="text" class="soma4din" id="soma4din" onblur="calculof1250()"value="0" readonly ></td>
+    </tr>
+
+    <tr>
+        <td><div  style="width:100px;" onclick="novoa()">Ajustagem</div></td>
+        <td><label style="width: 100px;" type="text" class="somaajust" id="somaajust" value="0" readonly ></td>
+        <td><label style="width: 100px;" type="text" class="somaajustdin" id="somaajustdin" value="0" readonly ></td>
+    </tr>
+
+    <tr>
+        <td><div  style="width:100px;" onclick="nov()">Convencional</div></td>
+        <td><label style="width: 100px;" type="text" class="somaconv" id="somaconv" value="0" readonly ></td>
+        <td><label style="width: 100px;" type="text" class="somaconvdin" id="somaconvdin" value="0" readonly ></td>
+    </tr>
+    <tr>
+        <td><div  style="width:100px;" onclick="noav()">Montagem</div></td>
+        <td><label style="width: 100px;" type="text" class="somamont" id="somamont" value="0" readonly ></td>
+        <td><label style="width: 100px;" type="text" class="somamontdin" id="somamontdin" value="0" readonly ></td>
+    </tr>
+    <tr>
+        <td><div  style="width:100px;" onclick="retifica()">Retifica</div></td>
+        <td><label style="width: 100px;" type="text" class="somaret" value="0" id="somaret" readonly ></td>
+        <td><label style="width: 100px;" type="text" class="somaretdin" id="somaretdin" value="" readonly ></td>
+    </tr>
+    <tr>
+        <td><div  style="width:100px;" onclick="noaav()">Torno CNC</div></td>
+        <td><label style="width: 100px;" type="text" class="somatorno" id="somatorno" value="0" readonly ></td>
+        <td><label style="width: 100px;" type="text" class="somatornodin" id="somatornodin" value="0" readonly ></td>
+    </tr>
+    <tr>
+        <td><div  style="width:100px;" onclick="noaaav()">Qualidade</div></td>
+        <td><label style="width: 100px;" type="text" class="somaquali" id="somaquali" value="0" readonly ></td>
+        <td><label style="width: 100px;" type="text" class="somaqualidin" id="somaqualidin" value="0" readonly ></td>
+    </tr>
+</table>
+<div style="display: inline;">
+    <table border="2 px solid black;"style="width: 40% !important; font-size: 0.8em;" class="styled-table" >
+        <thead><td>Transporte</td></thead>
+        <tr>
+            <td><input type="radio" id="empresa" onclick="checkado()"name="transp"  value="y">
+                <label for="empresa"><b>Por Conta da Graúna</b></label>
+        
+            <input type="radio" id="cliente" onclick="checkado()"name="transp" value="">
+                <label for="cliente"><b>Por Conta do Cliente</b></label></td>
+            </tr>
+        <tr></tr>
+        
+        <tr><tr>
+    
+            <td ><input type="radio" id="orca" name="orcam" onclick="checkvalor()" class="continue"value="" disabled>
+                <label id="orca1"for="orca" disabled><b>Conforme orçamento</b></label>
+            <input type="radio" id="cobrnot" name="orcam"  onclick="checkvalor()" value="" class="continue" disabled>
+                <label id="orca2"for="cobrnot"  disabled><b>Não será cobrado</b></label></td>
+        </tr></tr>
+        <td>
+            <label>Valor orçado:</label>
+            <input type="numeric" id="transp" value="0" onblur="somatrans()" disabled></input></td>
+    </tr>
+</table>
+</div>
+</div>
+        
+        <script language="javascript">
+            function checkado(){
+            if (document.getElementById('empresa').checked) {
+               document.getElementById('orca').disabled = false;
+               document.getElementById('orca1').disabled = false;
+               document.getElementById('orca2').disabled = false;
+               document.getElementById('cobrnot').disabled = false;
+            } else {
+               document.getElementById('orca').disabled = true;
+               document.getElementById('cobrnot').disabled = true;
+               document.getElementById('orca1').disabled = true;
+               document.getElementById('orca2').disabled = true;
+            }
+        }
+        
+        function checkvalor(){
+            if (document.getElementById('orca').checked){
+                document.getElementById('transp').disabled = false;
+            }
+            else if(document.getElementById('cobrnot').checked){
+                document.getElementById('transp').disabled = true;
+            }
+        }
+        </script>
+        
+<!--
+<table border="2 px solid black;" class="styled-table">
+<thead>
+<td>DIMENSÕES MP</td>
+<td></td>
+<td></td>
+</thead>
+<tr>
+<td><input type="radio" id="redonda" name="fav_language" value="redonda">
+<label for="embraer">REDONDA</label></td>
+<td><input type="radio" id="quadrada" name="fav_language" value="yabora">
+<label for="yabora">QUADRADA</label></td>
+<td><input type="radio" id="sextavada" name="fav_language" value="venda">
+<label for="venda">SEXTAVADA</label><td>
+</tr>
+<tr>
+<td><input type="radio" id="perfil_l" name="fav_language" value="servicos">
+<label for="servicos">PERFIL L</label></td>
+<td><input type="radio" id="perfil_t" name="fav_language" value="industrialização">
+<label for="industrialização">PERFIL T</label></td>
+<td><input type="radio" id="ch" name="fav_language" value="industrialização">
+<label for="industrialização">CH OU PL</label></td>
+</tr>
+</table>
+</div>
+<div>
+
+<table border="2 px solid black;" class="styledxfloat:center	;" >
+
+<tr>
+    <td>Espessura:</td>
+    <td><input id="e" type="number"> <br /></td>
+</tr>
+<tr>
+    <td>Comprimento(mm):</td>
+    <td><input id="c" type="number"> <br /></td>
+</tr>
+
+<tr>
+    <td>Largura(mm):</td>
+    <td><input id="l" type="number"> <br /></td>
+</tr>
+
+<tr>
+    <td>Altura(mm):</td>
+    <td><input id="a" type="number"> <br /></td>
+</tr>
+<tr>
+    <td>Peso(kg/dm³):</td>
+    <td><input id="peso" type="number"> <br /></td>
+</tr>
+<tr>
+    <td>Resultado: </td>
+    <td><input type="number" id="resp" readonly></div></td>
+</tr>
+
+</table>
+<button type="button" onclick="calculo_peso">Calcular</button>
+<p></p>
+-->
+
+
+
+
+
+
+
+<p></p>
+<script>
+    function dimen(){
+        
+        var dim = document.getElementById("dimensao").value;
+        if(dim <= 125){
+            var a = "A";
+            var alodine = "5.82"
+            var anodizacao = "7.68"
+            var liq_pen = "13.20"
+            var primer = "1.62"
+            var antib = "1.62"
+            var tinta_poli = "2.34"
+            var pass = "3.48"
+
+            var anod_inc = 7.68
+
+            document.getElementById("valor_dim").innerHTML = a;
+            document.getElementById("alod_valor").innerHTML = alodine;
+            document.getElementById("anod_valor").innerHTML = anodizacao;
+            document.getElementById("liq_valor").innerHTML = liq_pen;
+            document.getElementById("primer_valor").innerHTML = primer;
+            document.getElementById("valor_antib").innerHTML = antib;
+            document.getElementById("valor_tinta").innerHTML = tinta_poli;
+            document.getElementById("valor_pass").innerHTML = pass;
+            document.getElementById("valor_anod_inc").innerHTML = anod_inc;
+
+
+
+
+        }
+        else if(dim <= 250){
+            var a = "B";
+            document.getElementById("valor_dim").innerHTML = a;
+        }
+        else if(dim <= 500){
+            var a = "C";
+            document.getElementById("valor_dim").innerHTML = a;
+        }
+        else if(dim <= 1000){
+            var a = "D";
+            document.getElementById("valor_dim").innerHTML = a;
+        }
+        else if(dim <= 1125){
+            var a = "E";
+            document.getElementById("valor_dim").innerHTML = a;
+        }
+        else if(dim <= 1250){
+            var a = "F";
+            document.getElementById("valor_dim").innerHTML = a;
+        }
+        else if(dim <= 1500){
+            var a = "G";
+            document.getElementById("valor_dim").innerHTML = a;
+        }
+        else if(dim <= 2000){
+            var a = "H";
+            document.getElementById("valor_dim").innerHTML = a;
+        }
+        else if(dim <= 2125){
+            var a = "I";
+            document.getElementById("valor_dim").innerHTML = a;
+        }
+        else if(dim <= 2125){
+            var a = "I";
+            document.getElementById("valor_dim").innerHTML = a;
+        }
+        else if (dim <= 2250){
+            var a = "J";
+            document.getElementById("valor_dim").innerHTML = a;
+        }
+        else {
+            var a = "K";
+            document.getElementById("valor_dim").innerHTML = a;
+        }
+    }
+
+</script>
+
+<script >
+localStorage.selecao = document.getElementById("tratamentosss");
+
+//Exibir o valor armazenado
+console.log(localStorage.selecao);
+</script>
+
+<p>
+
+<hr></hr>
+<!--
+
+<div id="tratamentosssborder: 1px dotted white;""" >
+    <div>Alodine &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input id="alodine" class="alod_valor"></div>
+    <div>Anodização Crômica</td><td>&ensp;&ensp;&ensp;&ensp;<input type="text" id="anod_crom" value="-"></input></div>
+    <div>Líquido Penetrante</td><td>&ensp;&ensp;&ensp;&ensp;&ensp;<input type="text" id="liq_pen"value="-"></input></div>
+    <div>Primer Epóxi</td><td>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input type="text" id="primer"value="-"></input></div>
+    <div>Antibiológico</td><td>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input type="text" id="antib"value="-"></input></div>
+    <div>Tinta Poliuretano</td><td>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input id="tinta_poli"type="text" value="-"></input></div>
+    <div>Passivação</td><td>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input type="text" id="passi"value="-"></input></div>
+    <div>Metalização | Isolamento<input type="number" id="pontos" onblur="verificargrupo()"style="width: 40px;"placeholder="Pts"></td><td>&ensp;&ensp;<input type="text" id="metal"value="-"></input></div>
+    <div>Anodização Sulfúrica Incolor</td><td></input>&ensp;<input type="text" id="anod_inc"value=""></input></div>
+    <div>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input type="text" id="somartt" ></input></div>
+    
+
+</div>
+
+<p></p>
+
+<script>
+function enable_txtbox(cash){
+if(document.getElementById(cashAmount).disabled == true){
+    document.getElementById(cashAmount).disabled = false;
+} else {
+    document.getElementById(cashAmount).disabled = true;
+}
+return true;
+}
+function mostraprec(){
+    var pacote = document.getElementsByName('termic');
+    for (var i = 0; i < pacote.length; i++){
+        if ( pacote[i].checked ) {
+            if(pacote[i].value == "Endur"){
+                var Pacote_i = 15.21;
+                document.getElementById("result_endur").innerHTML = Pacote_i;
+        }	else if (pacote[i].value == "temp") {
+                var Pacote2 = 37.63;
+                document.getElementById("result_temp").innerHTML = Pacote2;
+        }	else if (pacote[i].value == "preca286") {
+                var Pacote3 = 45.08;
+            document.getElementById("result_preca").innerHTML = Pacote3;
+        }
+        else if (pacote[i].value == "subzero") {
+                var Pacote4 = 522.22;
+           document.getElementById("result_sub").innerHTML = Pacote4;
+        }
+        else if (pacote[i].value == "tempaog") {
+                var Pacote5 = 800.00;
+            document.getElementById("result_tempao").innerHTML = Pacote5;
+        }else if (pacote[i].value == "enduraog") {
+                var Pacote6 = 900.00;
+            document.getElementById("result_endura").innerHTML = Pacote6;
+        }
+        else if (pacote[i].value == "alivio") {
+                var Pacote7 = 393.00;
+            document.getElementById("result_alivio").innerHTML = Pacote7;
+        }
+        else if (pacote[i].value == "endurinox") {
+                var Pacote8 = 15.21;
+            document.getElementById("result_endurinox").innerHTML = Pacote8;
+        }
+    } 
+}
+}
+
+function somatratter(){
+    var somatte = document.getElementById("resultado_termico").value;
+    
+    var valor_trattermico = somatte;
+    document.getElementById("valor_trattermico").innerHTML = valor_trattermico;
+}
+
+function somatudo(){
+    var um, dois, tres, quatro, cinco, seis, sete, oito = 0;
+    um = document.getElementById("result_endur").value;
+    dois = document.getElementById("result_temp").value;
+    tres = document.getElementById("result_preca").value;
+    quatro = document.getElementById("result_tempao").value;
+    cinco = document.getElementById("result_sub").value;
+    seis = document.getElementById("result_endura").value;
+    sete = document.getElementById("result_alivio").value;
+    oito = document.getElementById("result_endurinox").value;
+    
+    var somaT = parseFloat(um) + parseFloat(dois) + parseFloat(tres) + parseFloat(quatro) + parseFloat(cinco) + parseFloat(seis) + parseFloat(sete) + parseFloat(oito) ;
+    document.getElementById("resultado_termico").value = somaT;
+    
+    if (Number.IsNaN(somaT)){
+        somaT = 0;
+    }
+}
+
+
+function tratterm(){
+var fornecedor = document.getElementsByName("termicos");
+//verificafornecedor();
+for (var i = 0 in fornecedor) 
+
+        if (fornecedor[0].checked){
+            document.getElementById("result_endur").value = 15.21;
+            document.getElementById("result_temp").value = 37.63;
+            document.getElementById("result_preca").value = 45.08;
+            document.getElementById("result_sub").value = 522.22;
+            document.getElementById("result_tempao").value = 800.00;
+            document.getElementById("result_endura").value = 900.00;
+            document.getElementById("result_alivio").value = 392.00;
+            document.getElementById("result_endurinox").value = 15.21;
+            }
+        
+        else if (fornecedor[1].checked){
+            
+            document.getElementById("result_endur").value = 0;
+            document.getElementById("result_temp").value = 0;
+            document.getElementById("result_preca").value = 0;
+            document.getElementById("result_sub").value = 0;
+            document.getElementById("result_tempao").value =0;
+            document.getElementById("result_endura").value = 0;
+            document.getElementById("result_alivio").value = 0;
+            document.getElementById("result_endurinox").value = 0;
+        }
+}
+</script>
+
+<p>
+<div id="tratamento_orcadodisplay: block;" >
+    <div>Anodização Pura</td><td>&ensp;&ensp;<label type="text" value="-"></input></div>
+    <div>Partícula Magnética</td><td>&ensp;&ensp;<label type="text" value="-"></input></div>
+    <div>Shoot Peening</td><td>&ensp;&ensp;<label type="text" value="-"></input></div>
+    <div>Cádmio | Dureza&ensp;<input type="textwidth:45px;"placeholder="Hrc"></td><td>&ensp;&ensp;<label type="text" value="-"></input></div>
+    <div>Fosfatização</td><td>&ensp;&ensp;<label type="text" value="-"></input></div></td>
+    <div>Jateamento</td><td>&ensp;&ensp;<label type="text" value="-"></input></div></td>
+    <div>Alívio de Tensão</td><td>&ensp;&ensp;<label type="text" value="-"></input></div>
+    <div>Oxidação Negra</td><td>&ensp;&ensp;<label type="text" value="-"></input></div>
+    <div>Óleo Protetivo</td><td>&ensp;&ensp;<label type="text" value="-"></input></div>
+    <input type="checkbox" id="cash" name="cash" onchange="enable_txtbox(cash)">Conforme Orçamento&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<label id="resultado_superficial"></label><p><input type="textwidth: 70px;" placeholder="Valor" id="cashAmount" placeholder="Valor" ></input>
+</div>
+</p>
+<p></p>
+<input type="radio" name="termicos" onclick="tratterm(); somatratter(); somatudo();"id="villares">Villares</input>
+<input type="radio" name="termicos" onclick="tratterm(); somatratter(); somatudo();"id="outros">Outros</input>
+<div id="tratamento_orcado_termdisplay: block;" >
+    <div>Endur. Precipitação</td><td>&ensp;&ensp;<input id="result_endur" type="text" ></input></div>
+    <div>Têmpera e Revenimento</td><td>&ensp;&ensp;<input type="text" id="result_temp" ></input></div>
+    <div>Endur. Precipitação A286</td><td>&ensp;&ensp;<input type="text" id="result_preca" ></input></div>
+    <div>Sub Zero&ensp;</td><td>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input type="text" id="result_sub" ></input></div>
+    <div>Têmpera e Revenimento (AOG)</td><td>&ensp;&ensp;<input id="result_tempao" type="text" ></input></div>
+    <div>Endur. Precipitação A286 (AOG)</td><td>&ensp;&ensp;<input type="text" id="result_endura" ></input></div>
+    <div>Alívio de Tensão</td><td>&ensp;&ensp;<input type="text" id="result_alivio" ></input></div>
+    <div>Endur. Precipitação INOX (AOG)</td><td>&ensp;&ensp;<input type="text" id="result_endurinox" ></input></div>
+    
+    <input type="text" id="resultado_termico" onclick="somatratter()"></input>
+<input type="checkbox" id="cash1" name="cash1" onchange="enable_txtbox(cash1)">Conforme Orçamento&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<p><input type="textwidth: 70px;" placeholder="Valor" id="cashAmount1" placeholder="Valor" ></input>
+<p></p>
+-->
+
+<hr></hr>
+<footer>
+<textarea style="width: 100%;" spellcheck="true" placeholder="Observações"></textarea>
+<p></p> 	
+
+<div class="row">
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-database"></i>
+            Salvar</button>
+    </div>
+    <div class="col-md-3">
+        <button type="reset" class="btn btn-terciary btn-block btn-lg">
+            <i class="fas fa-stream"></i> Limpar Tudo
+        </button>
+    </div>
+    <div class="col-md-3">
+    
+        <input type="button" value="Informe de premiação" class="btn btn-secondary btn-block btn-lg" onclick="document.getElementById('printPDF').focus(); document.getElementById('printPDF').contentWindow.print();">
+        <i value="" ></i>
+        </input>
+    </div>
+</div>
+<iframe style="dysplay: none; visibility: hidden;" src="informe.pdf" id="printPDF"></iframe>
+</form>
+</footer>
+
+{% endblock content %}
+
+
+

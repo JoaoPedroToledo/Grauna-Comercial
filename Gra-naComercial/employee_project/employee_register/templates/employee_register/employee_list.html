@@ -1,0 +1,128 @@
+<nav class="navbar navbar navbar-dark bg-dark justify-content-between">
+    <a class="navbar-brand" style="color: white;">HOME</a>
+    <form class="form-inline my-2 my-lg-0">
+        <button onclick="goBack()">Voltar</button>
+        <input class="form-control mr-sm-2" name="q" type="search" placeholder="Procura Cotação/PN" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Procurar</button>
+      </form>
+  </nav>
+{% extends "employee_register/base.html" %}
+<link rel="shortcut icon" type="imagex/png" href="https://graunaaerospace.com.br/wp-content/uploads/2017/06/cropped-logo.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <script type="text/javascript">
+        $('.example2').on('click', function(){
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Simple confirm!',
+                buttons: {
+                    confirm: function(){
+                        $.alert('Confirmed!');
+                    },
+                    cancel: function(){
+                        $.alert('Canceled!');
+                    },
+                    somethingElse: {
+                        text: 'Something else',
+                        btnClass: 'btn-blue',
+                        keys: [
+                            'enter',
+                            'shift'
+                        ],
+                        action: function(){
+                            this.$content // reference to the content
+                            $.alert('Something else?');
+                        }
+                    }
+                }
+            });
+        });
+                function goBack() {
+                    window.history.back()
+                }
+</script>
+
+   
+<div class="container">
+    </div>
+    
+{% block content %} 
+    <div>
+        <h1 class="display-3">Cotação</h1>
+        <hr class="my-4">
+        <h2 class="lead font-italic">Itens em Aberto</h2>
+        <hr class="my-4">
+    </div>
+    
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Nº da Cotação</td>
+            <td>PN</td>
+            <td>Vencimento</td>
+            <td>
+                <a href="{% url 'employee_insert' %}" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Nova Cotação
+                </a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for employee in employee_list %}
+            <tr>
+                <td>{{employee.fullname}}</td>
+                <td>{{employee.mobile}}</td>
+                <td>{{employee.data_final}}</td>
+                <td>
+                    <a href="{% url 'employee_update' employee.id %}" class="btn text-secondary px-0">
+                        <i class="far fa-edit fa-lg"></i>
+                    </a>
+                    <form action="{% url 'employee_delete' employee.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="fas fa-trash fa-lg text-danger float-right example2" ></i>
+                        </button>
+                    </form>
+                    
+                </td>
+                
+            </tr>
+        {% endfor %}
+    </tbody>
+    
+
+</table>
+<div class="pagination">
+    <span class="step-links">
+        {% if employee.has_previous %}
+            <a href="?page={{ employee.previous_page_number}}"><i class="fas fa-arrow-left"></i></a>
+        {% endif %}
+
+        {% if employee.paginator.num_pages %}
+            <span class="current">
+                {{ employee.number }} de {{ employee.paginator.num_pages }}
+            </span>
+            {% endif %}
+            {% if employee.has_next %}
+                <a href="?page={{ employee.next_page_number }}"><i class="fas fa-arrow-right"></i></a>
+            {% endif %}
+        </span>
+</div>
+<hr class="my-4">
+<div class = "row">
+    <a href="{% url 'ncm_list' %}" class="btn btn-outline-secondary btn-sm mr-2">
+        <i class="fas fa-plus "></i> Incluir/Alterar NCM
+    </a>
+    <i></i>
+    <a href="{% url 'employee_insert' %}" class="btn btn-outline-secondary btn-sm mr-2">
+        <i class="fas fa-plus"></i> Alterar preço dos Fornecedores
+    </a>
+    <a href="{% url 'employee_insert' %}" class="btn btn-outline-secondary btn-sm mr-2">
+        <i class="fas fa-plus"></i> Alterar Preços
+    </a>
+    <!--<a href="{% url 'informe_pdf' %}" class="btn btn-outline-secondary btn-sm mr-2 fixed"><i class="fas fa-plus" style="color: gray;"></i> Carta</a>-->
+</div>
+
+<p></p>
+{% endblock content %}
+

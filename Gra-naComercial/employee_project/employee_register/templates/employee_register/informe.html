@@ -1,0 +1,344 @@
+<html lang="pt-br">
+    
+<head>
+    <style>
+        .styled-table {
+            border-collapse: collapse;
+            margin: 07px 0;
+            font-size: 0.65em;
+            font-family: sans-serif;
+            min-width: 300px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .styledx {
+            border-collapse: collapse;
+            margin: 9px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 210px;
+        }
+        .styledx thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+        }
+        
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+        }
+        .styled-table th,
+        .styled-table td {
+            padding: 5px 8px;
+        }
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+        
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+        
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 1px solid #009879;
+        }
+        
+        .styled-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+        
+        
+        
+        table.blueTable {
+        border: 1px solid #000000;
+        background-color: #C9C9C9;
+        width: 30%;
+        text-align: left;
+        }
+        table.blueTable td, table.blueTable th {
+        border: 1px solid #AAAAAA;
+        }
+        table.blueTable tbody td {
+        font-size: 13px;
+        }
+        table.blueTable thead {
+        background: #0CAA59;
+        background: -moz-linear-gradient(top, #49bf82 0%, #24b269 66%, #0CAA59 100%);
+        background: -webkit-linear-gradient(top, #49bf82 0%, #24b269 66%, #0CAA59 100%);
+        background: linear-gradient(to bottom, #49bf82 0%, #24b269 66%, #0CAA59 100%);
+        border-bottom: 2px solid #FFFFFF;
+        }
+        table.blueTable thead th {
+        font-size: 15px;
+        font-weight: bold;
+        color: #000000;
+        text-align: left;
+        border-left: 2px solid #C9BBC8;
+        }
+        table.blueTable thead th:first-child {
+        border-left: none;
+        }
+        
+        table.blueTable tfoot td {
+        font-size: 14px;
+        }
+        table.blueTable tfoot .links {
+        text-align: right;
+        }
+        table.blueTable tfoot .links a{
+        display: inline-block;
+        background: #1C6EA4;
+        color: #FFFFFF;
+        padding: 2px 8px;
+        border-radius: 5px;
+        }
+        </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>INFORME</title>
+
+    <style>
+    
+        .bootstrap-select .bs-ok-default::after {
+            width: 0.3em;
+            height: 0.6em;
+            border-width: 0 0.1em 0.1em 0;
+            transform: rotate(45deg) translateY(0.5rem);
+        }
+        
+        .btn.dropdown-toggle:focus {
+            outline: none !important;
+        }
+        
+        ul#youelementId li{
+            display: inline-block;
+        }
+        
+        label {
+            font-size: 0.72em;
+        }
+    </style>
+    {% load crispy_forms_tags %}
+<center>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div style="display: inline-block;">
+    <table  style="border:1px solid black; overflow:hidden;"> 
+        <tr>
+        <td><label>Numero da Cotação*:<td>
+        <td><input type="text" style="border:0 none;"readonly></input></td>
+           <td><label> PN*:</label><input type="text"style="border:0 none;"readonly></input><td>
+        </tr>
+        <tr>
+        <td><label>REV*:<td>
+        <td><input type="text" style="width: 45px; border:0 none;"readonly></input></td><td><label>Descrição*: <input type="text"style="border:0 none;" readonly></input></td>
+    
+        </tr>
+        <tr>
+        <td> <label>Cliente*:<td>
+        <td> <input type="text"style="border:0 none;" readonly></input></td><td><label>Contato*:<input type="text" style="border:0 none;"readonly></input></td>
+        </tr>
+        <tr>
+        <td><label>Matéria-Prima*: <td>
+        <td> <input type="text"style="border:0 none;"readonly ></input></td><td><label>Quantidade*:<input type="number"style="border:0 none;width:100px;" min="0"readonly></input></td>
+        </tr>
+    </td>
+</table>
+<p></p>
+        <table  style="border:1px solid black; overflow:hidden;"> 
+            <tr>
+            <td><label>Matéria Prima<td>
+            <td><input class="eng" type="text" id="valor_mp" style="border:0 none;" name="hr_maq" ></input><td>
+            </tr>
+            <tr>
+            <td><label>Tratamento Superficial<td>
+            <td><input class ="mo_insp" type="text" id="valor_tratsuperf"style="border:0 none;" ></input><td>
+        
+            </tr>
+            <tr>
+            <td><label>Tratamento Térmico<td>
+            <td><input class="mo_fab" type="text" id="valor_trattermico" style="border:0 none;" onblur="calcular()"></input><td>
+            </tr>
+            <tr>
+            <td><label>Transporte<td>
+            <td><input class="mo_fab" type="text" name="transporte"id="valor_transp" style="border:0 none;" onblur="calcular()"></input><td>
+            </tr>
+            <tr>
+            <td><label>Não Recorrente<td>
+            <td><input class="mo_fab" type="text" id="valor_not_recurring" style="border:0 none;"style="width:100px;" onblur="calcular()"></input><td>
+            </tr>
+        </td>
+    </table>
+    <table border="1 px solid black;"  style="text-align:center" class="styled-table">
+        <thead>
+        <td>CATEGORIA</td>
+        <td>TECNOLOGIA</td>
+        <td>HR SETUP</td>
+        <td>HR FABRICAÇÃO </td>
+        <tr>
+        </thead>
+            <td>3 eixos</td>
+            <td>FRESA CNC ROMI - 1250</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        
+        <tr>
+            <td>3 eixos</td>
+            <td>FRESA CNC ROMI - 560 e 760</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+    
+        <tr>
+            <td>3 eixos</td>
+            <td>FRESA CNC HIGH SPEED</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+    
+        <tr>
+            <td>3 eixos</td>
+            <td>FRESA CNC HARD METAL</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>3 eixos</td>
+            <td>FRESA CNC FC39 + WOTAN</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>4 eixos</td>
+            <td>FRESA CNC 4 EIXOS - 560</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>4 eixos</td>
+            <td>FRESA CNC 4 EIXOS - 560 HARD METAL</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>4 eixos</td>
+            <td>FRESA CNC HORIZ. MAZAK AÇO e TIT</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>4 eixos</td>
+            <td>FRESA CNC HORIZ. MAZAK ALUMINIO</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>Ajustagem</td>
+            <td>AJUSTAGEM DIRETOS</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>Convencional </td>
+            <td>USINAGEM CONVENCIONAL</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>Convencional </td>
+            <td>CORTE MP ALUMÍNIO</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>Convencional </td>
+            <td>CORTE MP AÇO E TIT</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>Montagem</td>
+            <td>MONTAGEM E SELAGEM</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>Retífica</td>
+            <td>RETÍFICA CNC</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>Retífica</td>
+            <td>RETÍFICA CONVENCIONAL</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>Torno CNC</td>
+            <td>INTEGREX AÇO e TITÂNIO</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>Torno CNC</td>
+            <td>INTEGREX ALUMINIO</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>Torno CNC</td>
+            <td>TORNO CNC G240</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+        <tr>
+            <td>Torno CNC</td>
+            <td>TORNO CNC G30</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+           
+        </tr>
+        <tr>
+            <td>Qualidade</td>
+            <td>CQ CNC/CONV. DIRETOS</td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            <td><input style="width: 100px;" type="text" ></input></td>
+            
+        </tr>
+    
+    </table>
+    <div><label >TRATAMENTOS SUPERFICIAIS REALIZADOS ( )</label>
+    <textarea type="text" style="width:800px; display:block;"></textarea></div>
+    <P></P>
+    <div><label>TRATAMENTOS TÉRMICOS REALIZADOS ( )</label>
+        <textarea type="text" style="width:800px; display:block;"></textarea></div><P></P>
+        <div><label >OBSERVAÇÕES INTERNAS</label>
+            <textarea type="text" style="width:800px; display:block;"></textarea></div><P></P>
+    </center>
+    
+</html>

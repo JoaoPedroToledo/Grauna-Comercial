@@ -1,0 +1,113 @@
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://www.jqueryscript.net/demo/jQuery-Multiple-Select-Plugin-For-Bootstrap-Bootstrap-Multiselect/css/bootstrap-multiselect.css" type="text/css">
+<link rel="stylesheet" href="https://www.jqueryscript.net/demo/jQuery-Multiple-Select-Plugin-For-Bootstrap-Bootstrap-Multiselect/css/prettify.css" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://www.jqueryscript.net/demo/jQuery-Multiple-Select-Plugin-For-Bootstrap-Bootstrap-Multiselect/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="https://www.jqueryscript.net/demo/jQuery-Multiple-Select-Plugin-For-Bootstrap-Bootstrap-Multiselect/js/prettify.js"></script>
+
+<p>
+<div>
+    <label>Tratamento Superficial</label>
+<select id="example-getting-started" multiple="multiple" style="display:block;">
+    <option value="1">Alodine</option>
+    <option value="2">Anodização Crômica</option>
+    <option value="3">Líquido Penetrante</option>
+    <option value="4">Primer Epóxi</option>
+    <option value="5">Antibiológico</option>
+    <option value="6">Tinta Poliuterano</option>
+    <option id="metal" value="7" onclick="metali()">Metalização | Isolamento</option>
+    <option value="8">Anodização Sulfúrica Incolor</option>
+    <option value="9">Anodização Sulfúrica Colorida</option>
+    <option value="10">Anodização Dura</option>
+    <option value="11">Partícula Magnética</option>
+    <option value="12">Shoot Peening</option>
+    <option value="13">Cádmio</option>
+    <option value="14">Fosfatização</option>
+    <option value="15">Jateamento</option>
+    <option value="16">Oxidação Negra</option>
+    <option value="17">Óleo Protetivo</option>
+    <option value="18">Zinco Níquel</option>
+    <option value="19">Ataque Nital</option>
+    <option value="20">Cromo</option>
+    <option value="21">Desidrogenização</option>
+
+  </select>
+  
+  <input type="hidden" id="pts" style="width:50px;" placeholder="Pontos"></input>
+
+
+    <label>Tratamento Térmico</label>
+    <select id="example-getting-started1" multiple="multiple">
+        <option value="1">Endur. Precipitação</option>
+        <option value="2">Têmpera e Revenimento</option>
+        <option value="3">Endur. Precipitação A286</option>
+        <option value="4">Sub Zero</option>
+        <option value="5">Têmpera e Revenimento (AOG)</option>
+        <option value="6">Endur. e Precipitação (AOG)</option>
+        <option value="7">Alívio de Tensão</option>
+        <option value="8">Inspeção Metalográfica</option>
+        <option value="9">Ensaio de Tração</option>
+      </select>
+    </p>
+    <img src="file:///C:/Users/Jo%C3%A3o%20Pedro%20Toledo/Desktop/ttermico.png"></img>
+    <footer >
+    <center>
+    <div class="form-group ">
+        <a href="{% url 'employee_insert' %}"><input type="submit" class="btn btn-success " name="submit" value="Salvar" /></a>
+       </div>
+    </center>
+</footer>
+  <script>
+  $(document).ready(function() {
+    let $select = $('#example-getting-started').multiselect({
+        enableFiltering: true,
+        filterPlaceholder: 'Pesquisa',
+        enableCaseInsensitiveFiltering : true,
+        includeSelectAllOption: true,
+        filterPlaceholder: 'Pesquisa',
+        dropRight: true,
+        selectAllText: 'Selecionar Tudo',
+        nonSelectedText: 'Selecionar',
+        selectAllValue: 'Todos selecionados',
+        nSelectedText: 'selecionados',
+        buttonWidth:'600px',
+        numberDisplayed: 5,
+        onChange: function (elem, chk) {
+          //your message
+        }
+    });
+  
+    $select.multiselect();
+  });
+  </script>
+  <script>
+    $(document).ready(function() {
+      let $select = $('#example-getting-started1').multiselect({
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        includeFilterClearBtn: true,
+        enableCaseInsensitiveFiltering: true,
+        nonSelectedText: 'Selecionar',
+        selectAllText: 'Selecionar Tudo',
+        selectAllValue: 'Todos selecionados',
+        nSelectedText: 'selecionados',
+        numberDisplayed: 5,
+        buttonWidth:'700px'
+      });
+    
+      $select.multiselect();
+    });
+    </script>
+
+    <script>
+        function metali(){
+            if (document.getElementById('metal').checked) {
+                document.getElementById('pts').type = 'text';
+            }
+            else {
+                document.getElementById('pts').type = 'hidden';
+            }
+        }
+
+    </script>
